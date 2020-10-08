@@ -50,7 +50,7 @@ public class @InputHandler : IInputActionCollection, IDisposable
                 {
                     ""name"": ""up"",
                     ""id"": ""deada2b5-2130-4de5-8855-24295954a1f8"",
-                    ""path"": ""<Keyboard>/a"",
+                    ""path"": ""<Keyboard>/w"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",

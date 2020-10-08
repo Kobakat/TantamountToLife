@@ -4,33 +4,59 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    #region Private class instances
+    #region Private data fields
     InputHandler ih = null;
     Rigidbody rb = null;
     Animator anim = null;
+    Collider col = null;
+
+    Vector2 inputDir;
     #endregion
 
     #region Serialized data fields
     [SerializeField]
-    float speed;
+    PhysicMaterial stopPhysicsMat, movePhysicsMat;
+
+    [SerializeField]
+    float speed, maxSpeed, turnSpeed;
     #endregion
 
-    void Start()
+    private void Awake()
     {
         ih = new InputHandler();
+    }
+    void Start()
+    {   
         rb = this.GetComponent<Rigidbody>();
-        anim = this.GetComponent<Animator>();
+        col = this.GetComponent<Collider>();
+    }
+    private void OnEnable()
+    {
+        ih.Enable();
+    }
+
+    private void OnDisable()
+    {
+        ih.Disable();
     }
 
     // Update is called once per frame
     void Update()
     {
-        Vector2 v2Input = ih.Standard.Movement.ReadValue<Vector2>();
-        v2Input = v2Input.normalized;
-        Vector3 v3Input = new Vector3(v2Input.x, 0, v2Input.y);
-
-        rb.AddForce(v3Input * this.speed * Time.deltaTime, ForceMode.Acceleration);
-
-        anim.SetFloat("Speed", v2Input.sqrMagnitude);
+        inputDir = ih.Standard.Movement.ReadValue<Vector2>();
+        col.material = inputDir.sqrMagnitude > 0 ? movePhysicsMat : stopPhysicsMat;
     }
+
+    void FixedUpdate()
+    {
+        Vector3 inputDirV3 = new Vector3(inputDir.x, 0, inputDir.y);
+        inputDirV3 = inputDirV3.normalized;
+
+        if (rb.velocity.sqrMagnitude < maxSpeed)
+            rb.AddForce(inputDirV3 * speed, ForceMode.Acceleration);
+
+        rb.velocity = Vector3.ClampMagnitude(rb.velocity, maxSpeed);
+    }
+
+   
 }
