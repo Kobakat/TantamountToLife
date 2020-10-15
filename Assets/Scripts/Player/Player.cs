@@ -34,5 +34,10 @@ public class Player : Entity
     {       
         this.state.StateFixedUpdate();
     }
-    
+
+    public sealed override void SetState(State newState)
+    {
+        base.SetState(newState);
+    }
+
 }

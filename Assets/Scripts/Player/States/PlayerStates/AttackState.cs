@@ -1,23 +1,27 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using UnityEditorInternal;
 using UnityEngine;
 
 public class AttackState : State
 {
+    float startTime;
+    float animLength;
 
     public AttackState(Player User) : base(User)
     {
         this.user = User;
+        this.startTime = Time.time;
         
+        
+        //Using a magic number until I do an animator overhaul
+        this.animLength = 1; //user.anim.GetCurrentAnimatorStateInfo(0).length;
     }
 
     public override void StateUpdate()
-    {
-        if (user.anim.GetCurrentAnimatorStateInfo(0).IsName("Male Attack1"))
+    {  
+        if (Time.time > startTime + animLength)
         {
-            return;
+            user.SetState(new IdleState(user));
         }
-        user.SetState(new IdleState(user));
     }
 
     public sealed override void StateFixedUpdate() { }
@@ -25,16 +29,17 @@ public class AttackState : State
 
     public sealed override void OnStateEnter()
     {
+
         //Turn sword trigger on
         user.weapon.enabled = true;
 
-        user.anim.Play("Male Attack 1");
+        user.anim.Play("MaleAttack");
+        
         base.OnStateEnter();
     }
 
     public sealed override void OnStateExit()
     {
-        //Turn sword trigger off
         user.weapon.enabled = false;
 
         base.OnStateExit();
