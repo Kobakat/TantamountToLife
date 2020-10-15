@@ -105,7 +105,7 @@ public class @InputHandler : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""5cd97186-7fa8-4f64-a387-1bed4178b3fd"",
-                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""path"": ""<Gamepad>/buttonEast"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",

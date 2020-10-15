@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    [SerializeField]
-    Transform target = null;
-    [SerializeField]
-    float distFromPlayer, height;
+    [SerializeField] Transform target = null;
+
+    [SerializeField] float distFromPlayer = 3;
+    [SerializeField] float height = 1;
+
 
     void FixedUpdate()
     {
