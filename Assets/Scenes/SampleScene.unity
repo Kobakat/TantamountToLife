@@ -1051,16 +1051,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6949bf226cb25241bcfd3a32f3c7a12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cam: {fileID: 963194227}
-  speed: 3
-  maxSpeed: 3
-  turnSpeed: 1000
+  player: {fileID: 1956381754}
+--- !u!95 &1956381752 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 95640976257318950, guid: 60e8218091f83244c9bf9c8c2569a009,
+    type: 3}
+  m_PrefabInstance: {fileID: 1924268317}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1956381753 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4532250632830336, guid: 60e8218091f83244c9bf9c8c2569a009,
     type: 3}
   m_PrefabInstance: {fileID: 1924268317}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1956381754
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1956381748}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 816fa2ceefb12544ab88b325692639d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rb: {fileID: 1956381749}
+  cam: {fileID: 963194227}
+  anim: {fileID: 1956381752}
+  inputDir: {x: 0, y: 0}
+  speed: 3
+  maxSpeed: 3
+  turnSpeed: 1000
 --- !u!1001 &2102722091
 PrefabInstance:
   m_ObjectHideFlags: 0
