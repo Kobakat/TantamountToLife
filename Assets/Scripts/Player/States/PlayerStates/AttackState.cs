@@ -26,6 +26,8 @@ public class AttackState : State
     public sealed override void OnStateEnter()
     {
         //Turn sword trigger on
+        user.weapon.enabled = true;
+
         user.anim.Play("Male Attack 1");
         base.OnStateEnter();
     }
@@ -33,6 +35,8 @@ public class AttackState : State
     public sealed override void OnStateExit()
     {
         //Turn sword trigger off
+        user.weapon.enabled = false;
+
         base.OnStateExit();
     }
 }

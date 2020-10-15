@@ -5,9 +5,13 @@ using UnityEngine;
 
 public class Player : Entity
 {
+    //TODO
+    //Encapsulate these with assesors
+
     public Rigidbody rb = null;
     public Camera cam = null;
     public Animator anim = null;
+    public Collider weapon = null;
 
     public Vector2 inputDir;
 
