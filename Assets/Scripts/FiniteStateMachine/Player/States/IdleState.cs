@@ -15,7 +15,7 @@ public class IdleState : PlayerState
     public sealed override void StateFixedUpdate() { }
     public sealed override void OnStateEnter() 
     {
-        player.anim.CrossFade("Male Sword Stance", 1);
+        player.anim.CrossFade("Male Sword Stance", 0.25f);
         base.OnStateEnter(); 
     }
     public sealed override void OnStateExit() { base.OnStateExit(); }

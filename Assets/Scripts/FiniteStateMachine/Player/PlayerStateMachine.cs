@@ -12,6 +12,10 @@ public class PlayerStateMachine : StateMachine
     public Camera cam = null;
     public Animator anim = null;
     public Collider weapon = null;
+    public CapsuleCollider playerCol = null;
+
+    public PhysicMaterial stopMaterial = null;
+    public PhysicMaterial moveMaterial = null;
 
     public Vector2 inputDir;
 
@@ -23,6 +27,7 @@ public class PlayerStateMachine : StateMachine
     {
         this.SetState(state = new IdleState(this));
         rb = this.GetComponent<Rigidbody>();
+        playerCol = this.GetComponent<CapsuleCollider>(); 
     }
     
     void Update() { this.state.StateUpdate(); }

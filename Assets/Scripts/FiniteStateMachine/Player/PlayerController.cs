@@ -51,16 +51,16 @@ public class PlayerController : MonoBehaviour
         player.inputDir = ih.Standard.Movement.ReadValue<Vector2>();
     }
 
-    //TODO
-    //Find a way to use these
-    //Locks player movement (ideally while attacking/falling/etc)
-    void Lock()
+    /*TODO
+    /Find a way to use these
+    /Locks player movement (ideally while attacking/falling/etc)
+    public static void LockPlayerMovement()
     {
         ih.Standard.Movement.Disable();
     }
 
-    void Unlock()
+    public static void UnlockPlayerMovement()
     {
         ih.Standard.Movement.Enable();
-    }
+    }*/
 }

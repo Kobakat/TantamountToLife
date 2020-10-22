@@ -28,12 +28,17 @@ public class OrbitState : PlayerState
     public sealed override void OnStateEnter()
     {
         player.anim.Play("Male_Sword_Walk");
+
+        //TODO
+        //Physics materials will get messy. PlayerStates should be refactord to inherit from a Move or Stop player state to handle physics materials.
+        player.playerCol.material = player.moveMaterial;
         
         base.OnStateEnter();
     }
 
     public sealed override void OnStateExit()
-    {        
+    {
+        player.playerCol.material = player.stopMaterial;
         base.OnStateExit();
     }
 
