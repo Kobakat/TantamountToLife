@@ -8,13 +8,13 @@ public class PlayerCamBind : MonoBehaviour
 {
     PlayerController pc = null;
     CameraController cc = null;
-    public InputHandler ih = null;
+    InputHandler ih = null;
 
     void Awake()
     {
-        pc = this.GetComponentInChildren<PlayerController>();
-        cc = this.GetComponentInChildren<CameraController>();
-        ih = new InputHandler();
+        this.pc = this.GetComponentInChildren<PlayerController>();
+        this.cc = this.GetComponentInChildren<CameraController>();
+        this.ih = new InputHandler();
 
         cc.ih = this.ih;
         pc.ih = this.ih;

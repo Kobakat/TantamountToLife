@@ -6,6 +6,8 @@ public class CameraStateMachine : StateMachine
 {
     public Transform target = null;
 
+    public Vector2 inputDir = Vector2.zero;
+
     public float height;
     public float distFromPlayer;
 

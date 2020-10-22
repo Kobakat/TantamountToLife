@@ -20,9 +20,4 @@ public class IdleState : PlayerState
     }
     public sealed override void OnStateExit() { base.OnStateExit(); }
 
-
-
-
-
-
 }
