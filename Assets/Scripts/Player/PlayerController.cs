@@ -6,31 +6,28 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+    public InputHandler ih = null;
+    PlayerStateMachine player = null;
 
-    InputHandler ih = null;
-    [SerializeField] Player player = null;
-
-    void Awake() 
+    void Start() 
     {
-        ih = new InputHandler();
-        player = GetComponent<Player>();
+        this.player = this.GetComponent<PlayerStateMachine>();
     }
 
     private void OnEnable()
     {       
-        ih.Standard.Attack.performed += OnAttack;
-        ih.Standard.Movement.performed += OnMove;
-        ih.Standard.Movement.canceled += OnStop;
-        ih.Enable();
+        this.ih.Standard.Attack.performed += OnAttack;
+        this.ih.Standard.Movement.performed += OnMoveStart;
+        this.ih.Standard.Movement.canceled += OnMoveStop;
+        this.ih.Enable();
     }
 
     private void OnDisable()
-    {
-        
-        ih.Standard.Attack.performed -= OnAttack;
-        ih.Standard.Movement.performed -= OnMove;
-        ih.Standard.Movement.canceled -= OnStop;
-        ih.Disable();
+    {      
+        this.ih.Standard.Attack.performed -= OnAttack;
+        this.ih.Standard.Movement.performed -= OnMoveStart;
+        this.ih.Standard.Movement.canceled -= OnMoveStop;
+        this.ih.Disable();
     }
 
     void OnAttack(InputAction.CallbackContext context)
@@ -38,12 +35,12 @@ public class PlayerController : MonoBehaviour
         player.SetState(new AttackState(player));
     }
 
-    void OnMove(InputAction.CallbackContext context)
+    void OnMoveStart(InputAction.CallbackContext context)
     {
         player.SetState(new OrbitState(player));
     }
 
-    void OnStop(InputAction.CallbackContext context)
+    void OnMoveStop(InputAction.CallbackContext context)
     {
         player.SetState(new IdleState(player));
     }
@@ -53,9 +50,6 @@ public class PlayerController : MonoBehaviour
     {
         player.inputDir = ih.Standard.Movement.ReadValue<Vector2>();
     }
-
-
-
 
     //TODO
     //Find a way to use these

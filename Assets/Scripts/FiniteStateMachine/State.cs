@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class State
 {
-    protected Player user;
+    protected StateMachine stateMachine;
 
     public abstract void StateUpdate();
     public abstract void StateFixedUpdate();
@@ -13,9 +13,9 @@ public abstract class State
 
 
     //Temporary hack while i figure out how to cast to a base constructor..
-    public State(Player User)
+    public State(StateMachine s)
     {
-        this.user = User;
+        this.stateMachine = s;
     }
         
 }

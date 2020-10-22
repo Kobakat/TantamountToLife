@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class IdleState : State
+public class IdleState : PlayerState
 {
-    public IdleState(Player User) : base(User)
+    public IdleState(StateMachine s) : base(s)
     {
-        this.user = User;
+        this.stateMachine = s;
     }
 
     //Nothing really happens in the idle state
@@ -15,7 +15,7 @@ public class IdleState : State
     public sealed override void StateFixedUpdate() { }
     public sealed override void OnStateEnter() 
     {
-        user.anim.Play("Male Sword Stance");
+        player.anim.CrossFade("Male Sword Stance", 1);
         base.OnStateEnter(); 
     }
     public sealed override void OnStateExit() { base.OnStateExit(); }

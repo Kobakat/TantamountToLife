@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : Entity
+public class PlayerStateMachine : StateMachine
 {
     //TODO
     //Encapsulate these with assesors
@@ -21,23 +21,11 @@ public class Player : Entity
 
     void Start()
     {
-        SetState(state = new IdleState(this));
+        this.SetState(state = new IdleState(this));
         rb = this.GetComponent<Rigidbody>();
     }
+    
+    void Update() { this.state.StateUpdate(); }
 
-    void Update()
-    {
-        this.state.StateUpdate();
-    }
-
-    void FixedUpdate()
-    {       
-        this.state.StateFixedUpdate();
-    }
-
-    public sealed override void SetState(State newState)
-    {
-        base.SetState(newState);
-    }
-
+    void FixedUpdate() { this.state.StateFixedUpdate(); }
 }

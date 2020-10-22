@@ -1,26 +1,22 @@
 ﻿using UnityEditorInternal;
 using UnityEngine;
 
-public class AttackState : State
+public class AttackState : PlayerState
 {
     float startTime;
     float animLength;
 
-    public AttackState(Player User) : base(User)
+    public AttackState(StateMachine s) : base(s)
     {
-        this.user = User;
+        this.stateMachine = s;
         this.startTime = Time.time;
-        
-        
-        //Using a magic number until I do an animator overhaul
-        this.animLength = 1; //user.anim.GetCurrentAnimatorStateInfo(0).length;
     }
 
     public override void StateUpdate()
     {  
         if (Time.time > startTime + animLength)
         {
-            user.SetState(new IdleState(user));
+            player.SetState(new IdleState(player));
         }
     }
 
@@ -29,18 +25,19 @@ public class AttackState : State
 
     public sealed override void OnStateEnter()
     {
+        player.anim.CrossFade("MaleAttack", 0.05f);
 
-        //Turn sword trigger on
-        user.weapon.enabled = true;
+        this.startTime = Time.time;
+        this.animLength = player.anim.runtimeAnimatorController.animationClips[0].length;
 
-        user.anim.Play("MaleAttack");
+        player.weapon.enabled = true;
         
         base.OnStateEnter();
     }
 
     public sealed override void OnStateExit()
     {
-        user.weapon.enabled = false;
+        player.weapon.enabled = false;
 
         base.OnStateExit();
     }

@@ -1,4 +1,4 @@
-// GENERATED AUTOMATICALLY FROM 'Assets/Scripts/InputHandler.inputactions'
+// GENERATED AUTOMATICALLY FROM 'Assets/Scripts/Player/InputHandler.inputactions'
 
 using System;
 using System.Collections;
@@ -31,6 +31,22 @@ public class @InputHandler : IInputActionCollection, IDisposable
                     ""type"": ""Button"",
                     ""id"": ""4517691d-9255-4517-9f6d-e0d2db0dbb52"",
                     ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Target"",
+                    ""type"": ""Button"",
+                    ""id"": ""e6f42536-8f62-4d4f-9e5d-7e3cfa96d1ab"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""FreeCam"",
+                    ""type"": ""Value"",
+                    ""id"": ""4af6c156-3d6e-46f1-a27d-01b704cfb212"",
+                    ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """"
                 }
@@ -123,6 +139,50 @@ public class @InputHandler : IInputActionCollection, IDisposable
                     ""action"": ""Attack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e8243e0c-0e1f-45f3-9dae-d4369a417191"",
+                    ""path"": ""<Keyboard>/leftShift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Target"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5825190d-9306-4fbc-9a27-89944abfab36"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Target"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""eea516dd-b0a6-418c-a2cf-80037225a77a"",
+                    ""path"": ""<Mouse>/delta"",
+                    ""interactions"": """",
+                    ""processors"": ""StickDeadzone"",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""FreeCam"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6eb75e98-3495-4941-85ee-6045b63dacdf"",
+                    ""path"": ""<Gamepad>/rightStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""FreeCam"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -144,6 +204,8 @@ public class @InputHandler : IInputActionCollection, IDisposable
         m_Standard = asset.FindActionMap("Standard", throwIfNotFound: true);
         m_Standard_Movement = m_Standard.FindAction("Movement", throwIfNotFound: true);
         m_Standard_Attack = m_Standard.FindAction("Attack", throwIfNotFound: true);
+        m_Standard_Target = m_Standard.FindAction("Target", throwIfNotFound: true);
+        m_Standard_FreeCam = m_Standard.FindAction("FreeCam", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -195,12 +257,16 @@ public class @InputHandler : IInputActionCollection, IDisposable
     private IStandardActions m_StandardActionsCallbackInterface;
     private readonly InputAction m_Standard_Movement;
     private readonly InputAction m_Standard_Attack;
+    private readonly InputAction m_Standard_Target;
+    private readonly InputAction m_Standard_FreeCam;
     public struct StandardActions
     {
         private @InputHandler m_Wrapper;
         public StandardActions(@InputHandler wrapper) { m_Wrapper = wrapper; }
         public InputAction @Movement => m_Wrapper.m_Standard_Movement;
         public InputAction @Attack => m_Wrapper.m_Standard_Attack;
+        public InputAction @Target => m_Wrapper.m_Standard_Target;
+        public InputAction @FreeCam => m_Wrapper.m_Standard_FreeCam;
         public InputActionMap Get() { return m_Wrapper.m_Standard; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -216,6 +282,12 @@ public class @InputHandler : IInputActionCollection, IDisposable
                 @Attack.started -= m_Wrapper.m_StandardActionsCallbackInterface.OnAttack;
                 @Attack.performed -= m_Wrapper.m_StandardActionsCallbackInterface.OnAttack;
                 @Attack.canceled -= m_Wrapper.m_StandardActionsCallbackInterface.OnAttack;
+                @Target.started -= m_Wrapper.m_StandardActionsCallbackInterface.OnTarget;
+                @Target.performed -= m_Wrapper.m_StandardActionsCallbackInterface.OnTarget;
+                @Target.canceled -= m_Wrapper.m_StandardActionsCallbackInterface.OnTarget;
+                @FreeCam.started -= m_Wrapper.m_StandardActionsCallbackInterface.OnFreeCam;
+                @FreeCam.performed -= m_Wrapper.m_StandardActionsCallbackInterface.OnFreeCam;
+                @FreeCam.canceled -= m_Wrapper.m_StandardActionsCallbackInterface.OnFreeCam;
             }
             m_Wrapper.m_StandardActionsCallbackInterface = instance;
             if (instance != null)
@@ -226,6 +298,12 @@ public class @InputHandler : IInputActionCollection, IDisposable
                 @Attack.started += instance.OnAttack;
                 @Attack.performed += instance.OnAttack;
                 @Attack.canceled += instance.OnAttack;
+                @Target.started += instance.OnTarget;
+                @Target.performed += instance.OnTarget;
+                @Target.canceled += instance.OnTarget;
+                @FreeCam.started += instance.OnFreeCam;
+                @FreeCam.performed += instance.OnFreeCam;
+                @FreeCam.canceled += instance.OnFreeCam;
             }
         }
     }
@@ -252,5 +330,7 @@ public class @InputHandler : IInputActionCollection, IDisposable
     {
         void OnMovement(InputAction.CallbackContext context);
         void OnAttack(InputAction.CallbackContext context);
+        void OnTarget(InputAction.CallbackContext context);
+        void OnFreeCam(InputAction.CallbackContext context);
     }
 }
