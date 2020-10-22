@@ -1,4 +1,4 @@
-// GENERATED AUTOMATICALLY FROM 'Assets/Scripts/Player/InputHandler.inputactions'
+// GENERATED AUTOMATICALLY FROM 'Assets/Scripts/InputHandler.inputactions'
 
 using System;
 using System.Collections;
@@ -164,22 +164,22 @@ public class @InputHandler : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""eea516dd-b0a6-418c-a2cf-80037225a77a"",
-                    ""path"": ""<Mouse>/delta"",
+                    ""id"": ""6eb75e98-3495-4941-85ee-6045b63dacdf"",
+                    ""path"": ""<Gamepad>/rightStick"",
                     ""interactions"": """",
-                    ""processors"": ""StickDeadzone"",
-                    ""groups"": ""Keyboard"",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
                     ""action"": ""FreeCam"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""6eb75e98-3495-4941-85ee-6045b63dacdf"",
-                    ""path"": ""<Gamepad>/rightStick"",
+                    ""id"": ""d0903d15-154e-44bc-9bfe-e60b2fb037a3"",
+                    ""path"": ""<Mouse>/delta"",
                     ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
+                    ""processors"": ""StickDeadzone(min=0.9,max=0.9)"",
+                    ""groups"": ""Keyboard"",
                     ""action"": ""FreeCam"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false

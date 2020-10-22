@@ -32,7 +32,7 @@ public class CameraController : MonoBehaviour
 
     void OnTargetStart(InputAction.CallbackContext context)
     {
-        this.cam.SetState(new FreeCamState(cam));
+        this.cam.SetState(new TargetCamState(cam));
     }
 
     void OnTargetStop(InputAction.CallbackContext context)
@@ -42,8 +42,14 @@ public class CameraController : MonoBehaviour
 
     void OnFreeCam(InputAction.CallbackContext context)
     {
-       
-        this.cam.SetState(new FreeCamState(cam));
+        //TODO
+        //Add free camera state
+        //this.cam.SetState(new FreeCamState(cam));
+    }
+
+    void Update()
+    {
+        this.cam.inputDir = ih.Standard.FreeCam.ReadValue<Vector2>();
     }
 
 }
