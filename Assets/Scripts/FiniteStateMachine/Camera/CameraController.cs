@@ -1,44 +1,59 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class CameraController : MonoBehaviour
+public class CameraController : StateMachine, IControllable
 {
-    public InputHandler ih = null;
-    CameraStateMachine cam = null;
+    #region Properties
 
+    public InputHandler InputHandler { get; set; }
+    public Transform target = null;
+   
+    public Vector2 InputDir { get; set; }
+    
+    public float height;
+    public float distFromPlayer;
+
+    #endregion
+
+    #region Unity Event Functions
     void Start()
     {
-        this.cam = GetComponent<CameraStateMachine>();
+        this.SetState(new OrbitCamState(this));
     }
 
     private void OnEnable()
     {
-        this.ih.Standard.Target.performed += OnTargetStart;
-        this.ih.Standard.Target.canceled += OnTargetStop;
-        this.ih.Standard.FreeCam.performed += OnFreeCam;
-        this.ih.Enable();
+        this.InputHandler.Standard.Target.performed += OnTargetStart;
+        this.InputHandler.Standard.Target.canceled += OnTargetStop;
+        this.InputHandler.Standard.FreeCam.performed += OnFreeCam;
+        this.InputHandler.Enable();
     }
 
     private void OnDisable()
     {
-        this.ih.Standard.Target.performed -= OnTargetStart;
-        this.ih.Standard.Target.canceled -= OnTargetStop;
-        this.ih.Standard.FreeCam.performed -= OnFreeCam;
-        this.ih.Disable();
+        this.InputHandler.Standard.Target.performed -= OnTargetStart;
+        this.InputHandler.Standard.Target.canceled -= OnTargetStop;
+        this.InputHandler.Standard.FreeCam.performed -= OnFreeCam;
+        this.InputHandler.Disable();
     }
 
-    void OnTargetStart(InputAction.CallbackContext context)
+    void Update()
     {
-        this.cam.SetState(new TargetCamState(cam));
+        this.InputDir = InputHandler.Standard.FreeCam.ReadValue<Vector2>();
+        this.state.StateUpdate();
     }
 
-    void OnTargetStop(InputAction.CallbackContext context)
-    {
-        this.cam.SetState(new OrbitCamState(cam));
-    }
+    void FixedUpdate() { this.state.StateFixedUpdate(); }
+
+    #endregion
+
+    #region Input Delegates
+    void OnTargetStart(InputAction.CallbackContext context) { this.SetState(new TargetCamState(this)); }
+    void OnTargetStop(InputAction.CallbackContext context) { this.SetState(new OrbitCamState(this)); }
 
     void OnFreeCam(InputAction.CallbackContext context)
     {
@@ -47,9 +62,26 @@ public class CameraController : MonoBehaviour
         //this.cam.SetState(new FreeCamState(cam));
     }
 
-    void Update()
+    #endregion
+
+
+    #region IControllable
+    public void EnableActions(InputAction[] Actions)
     {
-        this.cam.inputDir = ih.Standard.FreeCam.ReadValue<Vector2>();
+        foreach (InputAction action in Actions)
+        {
+            if (action != null)
+                action.Enable();
+        }
     }
 
+    public void DisableActions(InputAction[] Actions)
+    {
+        foreach (InputAction action in Actions)
+        {
+            if (action != null)
+                action.Disable();
+        }
+    }
+    #endregion
 }
