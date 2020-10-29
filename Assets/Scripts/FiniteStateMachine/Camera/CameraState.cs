@@ -4,11 +4,11 @@ using UnityEngine;
 
 public abstract class CameraState : State
 {
-    protected CameraStateMachine cam;
+    protected CameraController cam;
 
     public CameraState(StateMachine s) : base(s)
     {
         this.stateMachine = s;
-        this.cam = (CameraStateMachine)this.stateMachine;
+        this.cam = (CameraController)this.stateMachine;
     }
 }

@@ -1,44 +1,58 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Animations;
 using UnityEngine;
+
+/// <summary>
+/// Snaps the camera behind the player and holds it steady
+/// </summary>
 
 public class TargetCamState : CameraState
 {
     Vector3 targetPos, center, newXZ;
 
     float timer;
-    public TargetCamState(StateMachine s) : base(s) { }
+    float snapSpeed;
 
+    public TargetCamState(StateMachine s) : base(s) 
+    {
+        this.snapSpeed = 7;
+    }
 
+    #region State Events
     public override void StateFixedUpdate()
     {
-        timer += Time.deltaTime;
-
-        if(Vector3.Distance(cam.transform.position, targetPos) > 0.01)
-        {
-            newXZ = Vector3.Slerp(cam.transform.position, targetPos, timer);
-            cam.transform.position = new Vector3(newXZ.x, cam.transform.position.y, newXZ.z);
-        }
-
-        else
-        {
-            targetPos = cam.target.position + (cam.target.forward * -1).normalized * cam.distFromPlayer;
-            targetPos.y += cam.height;
-            cam.transform.position = targetPos;
-        }
-              
-        cam.transform.LookAt(cam.target);
+        WrapCameraBehindPlayer();
     }
 
     public override void StateUpdate() { }
     public override void OnStateEnter() 
     {
-        targetPos = cam.target.position + (cam.target.forward * -1).normalized * cam.distFromPlayer;
-        targetPos.y += cam.height;
-        center = targetPos + (targetPos + cam.transform.position) / 2;
-        
         base.OnStateEnter(); 
     }
-    public override void OnStateExit() { base.OnStateExit(); }
+    public override void OnStateExit() 
+    {
+        base.OnStateExit(); 
+    }
+    #endregion
+
+    #region State Logic
+
+    void WrapCameraBehindPlayer()
+    {
+        timer += Time.deltaTime;
+
+        targetPos = cam.target.position + (cam.transform.parent.Find("Character").forward * -1).normalized * cam.distFromPlayer;
+        center = cam.target.position;
+
+        newXZ = Vector3.Slerp(cam.transform.position - center, targetPos - center, timer * snapSpeed) + center;
+
+        cam.transform.position = new Vector3(newXZ.x, cam.transform.position.y, newXZ.z);
+
+        cam.transform.position = new Vector3(cam.transform.position.x, Mathf.Lerp(cam.transform.position.y, targetPos.y, timer), cam.transform.position.z);
+
+        cam.transform.LookAt(cam.target);
+    }
+    #endregion
 
 }

@@ -1,42 +1,62 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
+/// <summary>
+/// In this state, the player faces one direction and move relative to input.
+/// Useful for reorienting the camera behind the player.
+/// </summary>
 public class TargetState : PlayerState
 {
     Vector3 forward, right;
 
-    float targetSpeed;
+    InputAction[] actions;
     public TargetState(StateMachine s) : base(s)
     {
         this.stateMachine = s;
         this.forward = Vector3.zero;
         this.right = Vector3.zero;
-        this.targetSpeed = 3.0f;
+
+        actions = new InputAction[1] { player.InputHandler.Standard.Attack };
     }
 
-
+    #region State Event Functions
     public sealed override void StateUpdate() { }
 
-    //TODO
-    //Disable normal movement when in this state
+    
     public sealed override void StateFixedUpdate() 
     {
-        Vector3 forward = player.cam.transform.forward;
-        Vector3 right = player.cam.transform.right;
+        MovePlayer();
+    }
+    public sealed override void OnStateEnter()
+    {
+        player.Anim.CrossFade("Male Sword Block", 0.15f);
+        player.DisableActions(actions);
+        base.OnStateEnter();
+    }
+
+    
+    public sealed override void OnStateExit() 
+    {
+        player.EnableActions(actions);
+        base.OnStateExit(); 
+    }
+
+    #endregion
+
+    #region State Logic
+    void MovePlayer()
+    {
+        forward = player.Cam.transform.forward;
+        right = player.Cam.transform.right;
         forward.y = 0;
         right.y = 0;
         forward = forward.normalized;
         right = right.normalized;
 
-        Vector3 targetVel = Vector3.ClampMagnitude((forward * player.inputDir.y) + (right * player.inputDir.y), 1.0f) * targetSpeed;
-        player.rb.velocity = targetVel;
+        player.Rb.velocity = Vector3.ClampMagnitude((forward * player.InputDir.y) + (right * player.InputDir.x), 1.0f) * player.Speed;
     }
-    public sealed override void OnStateEnter()
-    {
-        player.anim.CrossFade("Male Sword Block", 0.15f);
-        base.OnStateEnter();
-    }
-    public sealed override void OnStateExit() { base.OnStateExit(); }
+    #endregion
 
 }
