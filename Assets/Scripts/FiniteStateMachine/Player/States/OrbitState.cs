@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
+/// <summary>
+/// Standard movement state for the player character.
+/// The character "Orbits" around the camera with relative input movement
+/// </summary>
+
 public class OrbitState : PlayerState
 {
     Vector3 velocity, forward, look;
     Quaternion destRot;
-
-    bool isMoving;
 
     public OrbitState(StateMachine s) : base(s)
     {
@@ -45,7 +48,14 @@ public class OrbitState : PlayerState
     #endregion
 
 
-    //Rotates the player relative to input
+    #region State Logic
+
+    void MovePlayer()
+    {
+        velocity.z = Mathf.Clamp(player.InputDir.sqrMagnitude, 0.0f, 1.0f) * player.Speed;
+        player.Rb.velocity = player.transform.rotation * new Vector3(0.0f, 0.0f, velocity.z) + new Vector3(0.0f, velocity.y, 0.0f);
+    }
+
     void Rotate()
     {
         forward = player.Cam.transform.forward;
@@ -59,14 +69,6 @@ public class OrbitState : PlayerState
             destRot = Quaternion.LookRotation(look);
             player.transform.rotation = Quaternion.RotateTowards(player.transform.rotation, destRot, player.TurnSpeed * Time.deltaTime);
         }
-    }
-
-    #region State Logic
-
-    void MovePlayer()
-    {
-        velocity.z = Mathf.Clamp(player.InputDir.sqrMagnitude, 0.0f, 1.0f) * player.Speed;
-        player.Rb.velocity = player.transform.rotation * new Vector3(0.0f, 0.0f, velocity.z) + new Vector3(0.0f, velocity.y, 0.0f);
     }
 
     #endregion

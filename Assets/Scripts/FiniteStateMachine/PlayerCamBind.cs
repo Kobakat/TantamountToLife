@@ -1,14 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+/// <summary>
+/// Binds a player character and a camera together with one input handler
+/// </summary>
 
-//Binds a player character and a camera together with one input handler
 
 public class PlayerCamBind : MonoBehaviour
 {
     Player player = null;
     CameraController cam = null;
     InputHandler ih = null;
+
 
     void Awake()
     {

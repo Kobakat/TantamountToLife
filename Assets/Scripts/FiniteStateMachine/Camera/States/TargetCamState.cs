@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEditor.Animations;
 using UnityEngine;
 
+/// <summary>
+/// Snaps the camera behind the player and holds it steady
+/// </summary>
+
 public class TargetCamState : CameraState
 {
     Vector3 targetPos, center, newXZ;

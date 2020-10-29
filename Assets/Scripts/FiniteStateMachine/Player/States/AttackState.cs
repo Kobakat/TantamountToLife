@@ -2,17 +2,20 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+/// <summary>
+/// Attacking state. Player enters this state when they press the attack button.
+/// If they press the attack button again at anytime, they will Queue for another attack.
+/// The player can strike three times to "chain" hits.
+/// </summary>
 public class AttackState : PlayerState
 {
+    #region Properties
     float startTime;
     float animLength;
-
-    
+    #endregion
 
     InputAction[] actionsToHandle;
-
-
-    
+   
     public AttackState(StateMachine s) : base(s)
     {
         this.stateMachine = s;

@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+/// <summary>
+/// Monobehavior that controls player's state and input (IControllable)
+/// </summary>
 public class Player : StateMachine, IControllable
 {
     #region Properties
