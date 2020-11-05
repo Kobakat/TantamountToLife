@@ -14,6 +14,7 @@ public class FallingState : PlayerState
         this.actionsToHandle = new InputAction[3] { player.InputHandler.Standard.Movement, player.InputHandler.Standard.Attack, player.InputHandler.Standard.Target };
         this.isLanding = false;
     }
+    
     #region State Events
     public sealed override void OnStateEnter()
     {
@@ -24,18 +25,9 @@ public class FallingState : PlayerState
     }
     public sealed override void StateFixedUpdate()
     {
-        if(player.hit.distance < player.minFallDistance && !isLanding)
-        {
-            player.Anim.CrossFade("Male Land", 0.1f);
-            this.animLength = player.Anim.runtimeAnimatorController.animationClips[0].length;
-            this.animStart = Time.time;
-            this.isLanding = true;
-        }
-
-        if(isLanding && Time.time > animStart + animLength)
-        {
-            player.SetState(new OrbitState(player));
-        }
+        CheckIfPlayerHitGround();
+        ExitStateWhenLandAnimationCompletes();
+         
     }
 
     public sealed override void StateUpdate() { }
@@ -48,5 +40,26 @@ public class FallingState : PlayerState
     #endregion
 
     #region State Logic
+
+    void CheckIfPlayerHitGround()
+    {
+        if (player.hit.distance < player.minFallDistance && !isLanding)
+        {
+            player.Anim.CrossFade("Male Land", 0.1f);
+            this.animLength = player.Anim.runtimeAnimatorController.animationClips[0].length;
+            this.animStart = Time.time;
+            this.isLanding = true;
+        }
+    }
+
+    void ExitStateWhenLandAnimationCompletes()
+    {
+        if (isLanding && Time.time > animStart + animLength)
+        {
+            player.SetState(new OrbitState(player));
+        }
+    }
     #endregion
 }
+
+

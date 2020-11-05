@@ -59,7 +59,7 @@ public class Player : StateMachine, IControllable
         this.state.StateFixedUpdate(); 
     }
 
-    private void OnEnable()
+    void OnEnable()
     {
         this.InputHandler.Standard.Attack.performed += OnAttack;
         this.InputHandler.Standard.Movement.performed += OnOrbitStart;
@@ -70,7 +70,7 @@ public class Player : StateMachine, IControllable
         this.InputHandler.Enable();
     }
 
-    private void OnDisable()
+    void OnDisable()
     {
         this.InputHandler.Standard.Attack.performed -= OnAttack;
         this.InputHandler.Standard.Movement.canceled += OnOrbitStart;
@@ -79,6 +79,14 @@ public class Player : StateMachine, IControllable
         this.InputHandler.Standard.Target.canceled -= OnTargetStop;
 
         this.InputHandler.Disable();
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if(other.CompareTag("Enemy Weapon"))
+        {
+            this.SetState(new TakeDamageState(this));
+        }
     }
 
     #endregion
