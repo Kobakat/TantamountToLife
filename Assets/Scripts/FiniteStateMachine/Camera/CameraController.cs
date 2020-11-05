@@ -72,6 +72,7 @@ public class CameraController : StateMachine, IControllable
 
     void OnFirstPersonCam(InputAction.CallbackContext context)
     {
+        //TODO make this player velocity not input
         if (this.InputDir.magnitude == 0 && this.state.GetType() != typeof(FirstPersonCamState))
             this.SetState(new FirstPersonCamState(this));
     }
