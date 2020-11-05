@@ -446,7 +446,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 775858077}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -16.644075, y: 0.9556483, z: 6.748389}
+  m_LocalPosition: {x: 0, y: 0.323, z: -1.253}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1369661346}
@@ -467,6 +467,8 @@ MonoBehaviour:
   target: {fileID: 1731326221}
   height: 0.25
   distFromPlayer: 2.5
+  freeCamSpeed: 1
+  freeCamYClamp: 30
 --- !u!81 &775858080
 AudioListener:
   m_ObjectHideFlags: 0

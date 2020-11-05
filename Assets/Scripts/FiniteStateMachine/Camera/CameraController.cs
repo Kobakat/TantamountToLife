@@ -16,6 +16,8 @@ public class CameraController : StateMachine, IControllable
     
     public float height;
     public float distFromPlayer;
+    public float freeCamSpeed;
+    public float freeCamYClamp;
 
     #endregion
 
@@ -55,12 +57,12 @@ public class CameraController : StateMachine, IControllable
     void OnTargetStart(InputAction.CallbackContext context) { this.SetState(new TargetCamState(this)); }
     void OnTargetStop(InputAction.CallbackContext context) { this.SetState(new OrbitCamState(this)); }
 
-    void OnFreeCam(InputAction.CallbackContext context)
-    {
-        //TODO
-        //Add free camera state
-        //this.cam.SetState(new FreeCamState(cam));
+    void OnFreeCam(InputAction.CallbackContext context) 
+    { 
+        if(this.state.GetType() != typeof(FreeCamState))    
+            this.SetState(new FreeCamState(this)); 
     }
+
 
     #endregion
 

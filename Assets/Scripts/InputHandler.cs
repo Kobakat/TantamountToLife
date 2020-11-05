@@ -174,15 +174,59 @@ public class @InputHandler : IInputActionCollection, IDisposable
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": """",
-                    ""id"": ""d0903d15-154e-44bc-9bfe-e60b2fb037a3"",
-                    ""path"": ""<Mouse>/delta"",
+                    ""name"": ""Keyboard Arrows"",
+                    ""id"": ""a5a3c491-d07e-4425-99c5-1ea375a7db32"",
+                    ""path"": ""2DVector"",
                     ""interactions"": """",
-                    ""processors"": ""StickDeadzone(min=0.9,max=0.9)"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""FreeCam"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""24c6fb10-16c0-42b2-8bec-9d940985e61f"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
                     ""groups"": ""Keyboard"",
                     ""action"": ""FreeCam"",
                     ""isComposite"": false,
-                    ""isPartOfComposite"": false
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""3b41b3c5-311f-49de-9b9b-ca629fc6fc81"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""FreeCam"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""bece952e-3230-4198-9e2b-40dddf1da58e"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""FreeCam"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""26852f8a-b38f-4034-ba86-c71ce7552fe3"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""FreeCam"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         }
