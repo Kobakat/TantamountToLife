@@ -11,7 +11,13 @@ public class TakeDamageState : PlayerState
 
     public TakeDamageState(StateMachine s) : base(s)
     {
-        actionsToHandle = new InputAction[3] { this.player.InputHandler.Standard.Movement, this.player.InputHandler.Standard.Attack, this.player.InputHandler.Standard.Target };
+        actionsToHandle = new InputAction[4] 
+        { 
+            this.player.InputHandler.Standard.Movement, 
+            this.player.InputHandler.Standard.Attack, 
+            this.player.InputHandler.Standard.Target, 
+            this.player.InputHandler.Standard.FirstPersonCam 
+        };
     }
 
     #region State Events
@@ -44,7 +50,9 @@ public class TakeDamageState : PlayerState
         player.Anim.CrossFade("Male Damage Light", 0.1f);
 
         this.startTime = Time.time;
-        this.animLength = player.Anim.runtimeAnimatorController.animationClips[0].length;
+
+        //Hack hard coded speed modifier
+        this.animLength = player.Anim.runtimeAnimatorController.animationClips[0].length / 2;
     }
 
     void ReturnToNormalStateWhenAnimationFinishes()

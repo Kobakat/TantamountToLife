@@ -142,7 +142,6 @@ public class Player : StateMachine, IControllable
         if(Physics.Raycast(RayOrigin.position, Vector3.down, out hit))
         {
             float dist = hit.distance;
-            Debug.Log(dist);
             if(hit.distance > minFallDistance)
             {
                 this.SetState(new FallingState(this));
