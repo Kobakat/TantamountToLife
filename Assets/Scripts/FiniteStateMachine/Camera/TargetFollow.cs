@@ -6,11 +6,8 @@ using UnityEngine;
 public class TargetFollow : MonoBehaviour
 {
     [SerializeField] Transform player = null;
-    Vector3 offset;
-    void Start()
-    {
-        this.offset = this.transform.position;
-    }
+    [SerializeField] Vector3 offset = Vector3.zero;
+
     void FixedUpdate()
     {
         this.transform.position = player.transform.position + offset;

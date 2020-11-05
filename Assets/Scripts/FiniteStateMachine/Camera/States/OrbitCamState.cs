@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//TODO rename to an all purpose "moving" state
 public class OrbitCamState : CameraState
 {
     Vector3 adjust, targetPos, vel;

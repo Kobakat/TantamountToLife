@@ -49,6 +49,14 @@ public class @InputHandler : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""FirstPersonCam"",
+                    ""type"": ""Button"",
+                    ""id"": ""3504b319-435f-41fd-b19f-b8a939d4c706"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -174,13 +182,79 @@ public class @InputHandler : IInputActionCollection, IDisposable
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": """",
-                    ""id"": ""d0903d15-154e-44bc-9bfe-e60b2fb037a3"",
-                    ""path"": ""<Mouse>/delta"",
+                    ""name"": ""Keyboard Arrows"",
+                    ""id"": ""a5a3c491-d07e-4425-99c5-1ea375a7db32"",
+                    ""path"": ""2DVector"",
                     ""interactions"": """",
-                    ""processors"": ""StickDeadzone(min=0.9,max=0.9)"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""FreeCam"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""24c6fb10-16c0-42b2-8bec-9d940985e61f"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
                     ""groups"": ""Keyboard"",
                     ""action"": ""FreeCam"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""3b41b3c5-311f-49de-9b9b-ca629fc6fc81"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""FreeCam"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""bece952e-3230-4198-9e2b-40dddf1da58e"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""FreeCam"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""26852f8a-b38f-4034-ba86-c71ce7552fe3"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""FreeCam"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""416c138a-42ed-452b-a8e2-2d9dd0f71eb2"",
+                    ""path"": ""<Gamepad>/dpad/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""FirstPersonCam"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6b5b8554-ab0d-40e2-8ee8-4bf3e0d933ab"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""FirstPersonCam"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -206,6 +280,7 @@ public class @InputHandler : IInputActionCollection, IDisposable
         m_Standard_Attack = m_Standard.FindAction("Attack", throwIfNotFound: true);
         m_Standard_Target = m_Standard.FindAction("Target", throwIfNotFound: true);
         m_Standard_FreeCam = m_Standard.FindAction("FreeCam", throwIfNotFound: true);
+        m_Standard_FirstPersonCam = m_Standard.FindAction("FirstPersonCam", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -259,6 +334,7 @@ public class @InputHandler : IInputActionCollection, IDisposable
     private readonly InputAction m_Standard_Attack;
     private readonly InputAction m_Standard_Target;
     private readonly InputAction m_Standard_FreeCam;
+    private readonly InputAction m_Standard_FirstPersonCam;
     public struct StandardActions
     {
         private @InputHandler m_Wrapper;
@@ -267,6 +343,7 @@ public class @InputHandler : IInputActionCollection, IDisposable
         public InputAction @Attack => m_Wrapper.m_Standard_Attack;
         public InputAction @Target => m_Wrapper.m_Standard_Target;
         public InputAction @FreeCam => m_Wrapper.m_Standard_FreeCam;
+        public InputAction @FirstPersonCam => m_Wrapper.m_Standard_FirstPersonCam;
         public InputActionMap Get() { return m_Wrapper.m_Standard; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -288,6 +365,9 @@ public class @InputHandler : IInputActionCollection, IDisposable
                 @FreeCam.started -= m_Wrapper.m_StandardActionsCallbackInterface.OnFreeCam;
                 @FreeCam.performed -= m_Wrapper.m_StandardActionsCallbackInterface.OnFreeCam;
                 @FreeCam.canceled -= m_Wrapper.m_StandardActionsCallbackInterface.OnFreeCam;
+                @FirstPersonCam.started -= m_Wrapper.m_StandardActionsCallbackInterface.OnFirstPersonCam;
+                @FirstPersonCam.performed -= m_Wrapper.m_StandardActionsCallbackInterface.OnFirstPersonCam;
+                @FirstPersonCam.canceled -= m_Wrapper.m_StandardActionsCallbackInterface.OnFirstPersonCam;
             }
             m_Wrapper.m_StandardActionsCallbackInterface = instance;
             if (instance != null)
@@ -304,6 +384,9 @@ public class @InputHandler : IInputActionCollection, IDisposable
                 @FreeCam.started += instance.OnFreeCam;
                 @FreeCam.performed += instance.OnFreeCam;
                 @FreeCam.canceled += instance.OnFreeCam;
+                @FirstPersonCam.started += instance.OnFirstPersonCam;
+                @FirstPersonCam.performed += instance.OnFirstPersonCam;
+                @FirstPersonCam.canceled += instance.OnFirstPersonCam;
             }
         }
     }
@@ -332,5 +415,6 @@ public class @InputHandler : IInputActionCollection, IDisposable
         void OnAttack(InputAction.CallbackContext context);
         void OnTarget(InputAction.CallbackContext context);
         void OnFreeCam(InputAction.CallbackContext context);
+        void OnFirstPersonCam(InputAction.CallbackContext context);
     }
 }

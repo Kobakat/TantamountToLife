@@ -32,8 +32,7 @@ public class OrbitState : PlayerState
 
     public sealed override void OnStateEnter()
     {
-        //TODO
-        //Physics materials will get messy. PlayerStates should be refactord to inherit from a Move or Stop player state to handle physics materials.
+        player.Anim.CrossFade("Male Sword Stance", .2f);
         player.PlayerCol.material = player.MoveMaterial;
         
         base.OnStateEnter();

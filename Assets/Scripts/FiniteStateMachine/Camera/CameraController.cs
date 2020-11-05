@@ -11,11 +11,18 @@ public class CameraController : StateMachine, IControllable
 
     public InputHandler InputHandler { get; set; }
     public Transform target = null;
-   
+
     public Vector2 InputDir { get; set; }
     
     public float height;
     public float distFromPlayer;
+    
+    public float freeCamSpeed;
+    public float freeCamYClamp;
+
+    public float firstPersonSpeed;
+    public float firstPersonXClamp;
+    public float firstPersonYClamp;
 
     #endregion
 
@@ -30,6 +37,7 @@ public class CameraController : StateMachine, IControllable
         this.InputHandler.Standard.Target.performed += OnTargetStart;
         this.InputHandler.Standard.Target.canceled += OnTargetStop;
         this.InputHandler.Standard.FreeCam.performed += OnFreeCam;
+        this.InputHandler.Standard.FirstPersonCam.performed += OnFirstPersonCam;
         this.InputHandler.Enable();
     }
 
@@ -38,6 +46,7 @@ public class CameraController : StateMachine, IControllable
         this.InputHandler.Standard.Target.performed -= OnTargetStart;
         this.InputHandler.Standard.Target.canceled -= OnTargetStop;
         this.InputHandler.Standard.FreeCam.performed -= OnFreeCam;
+        this.InputHandler.Standard.FirstPersonCam.performed -= OnFirstPersonCam;
         this.InputHandler.Disable();
     }
 
@@ -55,12 +64,19 @@ public class CameraController : StateMachine, IControllable
     void OnTargetStart(InputAction.CallbackContext context) { this.SetState(new TargetCamState(this)); }
     void OnTargetStop(InputAction.CallbackContext context) { this.SetState(new OrbitCamState(this)); }
 
-    void OnFreeCam(InputAction.CallbackContext context)
-    {
-        //TODO
-        //Add free camera state
-        //this.cam.SetState(new FreeCamState(cam));
+    void OnFreeCam(InputAction.CallbackContext context) 
+    { 
+        if(this.state.GetType() != typeof(FreeCamState) && this.state.GetType() != typeof(FirstPersonCamState))    
+            this.SetState(new FreeCamState(this)); 
     }
+
+    void OnFirstPersonCam(InputAction.CallbackContext context)
+    {
+        //TODO make this player velocity not input
+        if (this.InputDir.magnitude == 0 && this.state.GetType() != typeof(FirstPersonCamState))
+            this.SetState(new FirstPersonCamState(this));
+    }
+
 
     #endregion
 

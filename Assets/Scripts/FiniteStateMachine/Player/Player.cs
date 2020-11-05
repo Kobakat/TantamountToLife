@@ -17,14 +17,18 @@ public class Player : StateMachine, IControllable
     public CapsuleCollider PlayerCol { get; protected set; }
   
     public Vector2 InputDir { get; protected set; }
+    public RaycastHit hit;
 
     public Collider Weapon;
     public PhysicMaterial StopMaterial;
     public PhysicMaterial MoveMaterial;
 
+    [SerializeField] Transform RayOrigin = null;
+
     public float Speed = 3;
     public float MaxSpeed = 5;
     public float TurnSpeed = 1000;
+    public float minFallDistance = 1;
 
     public int hitCount = 0;
     public bool queuedAtt = false;
@@ -49,9 +53,13 @@ public class Player : StateMachine, IControllable
         this.state.StateUpdate();
     }
 
-    void FixedUpdate() { this.state.StateFixedUpdate(); }
+    void FixedUpdate() 
+    {
+        this.CheckForFall();
+        this.state.StateFixedUpdate(); 
+    }
 
-    private void OnEnable()
+    void OnEnable()
     {
         this.InputHandler.Standard.Attack.performed += OnAttack;
         this.InputHandler.Standard.Movement.performed += OnOrbitStart;
@@ -62,7 +70,7 @@ public class Player : StateMachine, IControllable
         this.InputHandler.Enable();
     }
 
-    private void OnDisable()
+    void OnDisable()
     {
         this.InputHandler.Standard.Attack.performed -= OnAttack;
         this.InputHandler.Standard.Movement.canceled += OnOrbitStart;
@@ -71,6 +79,14 @@ public class Player : StateMachine, IControllable
         this.InputHandler.Standard.Target.canceled -= OnTargetStop;
 
         this.InputHandler.Disable();
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if(other.CompareTag("Enemy Weapon"))
+        {
+            this.SetState(new TakeDamageState(this));
+        }
     }
 
     #endregion
@@ -115,4 +131,21 @@ public class Player : StateMachine, IControllable
         }
     }
     #endregion IControllable
+
+    /// <summary>
+    /// Cast a ray straight down until it hits terrain.
+    /// If that distance is too large, the player begins to fall
+    /// </summary>
+    void CheckForFall()
+    {
+        //TODO add a layermask to diffrientiate what is considered ground
+        if(Physics.Raycast(RayOrigin.position, Vector3.down, out hit))
+        {
+            float dist = hit.distance;
+            if(hit.distance > minFallDistance)
+            {
+                this.SetState(new FallingState(this));
+            }
+        }
+    }
 }
