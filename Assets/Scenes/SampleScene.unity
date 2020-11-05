@@ -469,6 +469,9 @@ MonoBehaviour:
   distFromPlayer: 2.5
   freeCamSpeed: 1
   freeCamYClamp: 30
+  firstPersonSpeed: 1
+  firstPersonXClamp: 40
+  firstPersonYClamp: 30
 --- !u!81 &775858080
 AudioListener:
   m_ObjectHideFlags: 0

@@ -57,7 +57,6 @@ public class FreeCamState : CameraState
         this.inputX = target.rotation.eulerAngles.y;
         
         //HACK fixes a slight camera snap when entering this state
-        //This is incredibly sketchy...
         this.inputY = target.rotation.eulerAngles.x - 360;
     }
 

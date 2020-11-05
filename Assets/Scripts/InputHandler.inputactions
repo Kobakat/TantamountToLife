@@ -36,6 +36,14 @@
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "FirstPersonCam",
+                    "type": "Button",
+                    "id": "3504b319-435f-41fd-b19f-b8a939d4c706",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -214,6 +222,28 @@
                     "action": "FreeCam",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "416c138a-42ed-452b-a8e2-2d9dd0f71eb2",
+                    "path": "<Gamepad>/dpad/up",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "FirstPersonCam",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6b5b8554-ab0d-40e2-8ee8-4bf3e0d933ab",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "FirstPersonCam",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }
