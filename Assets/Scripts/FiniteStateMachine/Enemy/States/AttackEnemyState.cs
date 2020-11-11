@@ -4,13 +4,17 @@ using UnityEngine;
 
 public class AttackEnemyState : EnemyState
 {
+    public bool hasStruck;
+
     float animLength;
     float startTime;
     int random;
     bool isAttacking;
-
+    
     public AttackEnemyState(StateMachine s) : base(s)
     {
+        this.hasStruck = false;
+
         this.animLength = 0;
         this.startTime = 0;
         this.random = 0;
@@ -43,6 +47,11 @@ public class AttackEnemyState : EnemyState
     {
         AttackAfterDelay();
         PlayUntilAnimationIsCompleted();
+
+        if(hasStruck)
+        {
+            WeaponColliderEnabled(false);
+        }
     }
 
     #endregion

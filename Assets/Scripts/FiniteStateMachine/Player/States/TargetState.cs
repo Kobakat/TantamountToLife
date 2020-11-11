@@ -11,35 +11,29 @@ public class TargetState : PlayerState
 {
     Vector3 forward, right;
 
-    InputAction[] actions;
     public TargetState(StateMachine s) : base(s)
     {
         this.stateMachine = s;
         this.forward = Vector3.zero;
         this.right = Vector3.zero;
-
-        actions = new InputAction[1] { player.InputHandler.Standard.Attack };
     }
 
     #region State Event Functions
-    public sealed override void StateUpdate() { }
+    public override void StateUpdate() { }
 
     
-    public sealed override void StateFixedUpdate() 
+    public override void StateFixedUpdate() 
     {
         MovePlayer();
     }
-    public sealed override void OnStateEnter()
+    public override void OnStateEnter()
     {
-        player.Anim.CrossFade("Male Sword Block", 0.15f);
-        player.DisableActions(actions);
         base.OnStateEnter();
     }
 
     
-    public sealed override void OnStateExit() 
+    public override void OnStateExit() 
     {
-        player.EnableActions(actions);
         base.OnStateExit(); 
     }
 

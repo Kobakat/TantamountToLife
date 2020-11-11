@@ -35,6 +35,10 @@ public class TakeDamageState : PlayerState
         player.DisableActions(actionsToHandle);
 
         SetAnimationInfo();
+
+        Debug.Log(Time.time);
+        Debug.Log(startTime);
+        Debug.Log(startTime + animLength);
     }
 
     public sealed override void OnStateExit()
@@ -47,12 +51,13 @@ public class TakeDamageState : PlayerState
 
     void SetAnimationInfo()
     {
-        player.Anim.CrossFade("Male Damage Light", 0.1f);
-
         this.startTime = Time.time;
 
-        //Hack hard coded speed modifier
+        player.Anim.CrossFade("Male Damage Light", 0);
+
         this.animLength = player.Anim.runtimeAnimatorController.animationClips[0].length / 2;
+
+        Debug.Log(animLength);
     }
 
     void ReturnToNormalStateWhenAnimationFinishes()

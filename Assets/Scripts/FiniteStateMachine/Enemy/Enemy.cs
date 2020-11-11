@@ -50,6 +50,11 @@ public class Enemy : StateMachine
         {
             this.SetState(new DyingEnemyState(this));
         }
+
+        if(other.CompareTag("Player"))
+        {
+            
+        }
     }
 
     #endregion

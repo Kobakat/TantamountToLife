@@ -66,6 +66,8 @@ public class Player : StateMachine, IControllable
         this.InputHandler.Standard.Movement.canceled += OnOrbitStop;
         this.InputHandler.Standard.Target.performed += OnTargetStart;
         this.InputHandler.Standard.Target.canceled += OnTargetStop;
+        this.InputHandler.Standard.Block.performed += OnBlockStart;
+        this.InputHandler.Standard.Block.canceled += OnBlockStop;
 
         this.InputHandler.Enable();
     }
@@ -77,6 +79,8 @@ public class Player : StateMachine, IControllable
         this.InputHandler.Standard.Movement.canceled -= OnOrbitStop;
         this.InputHandler.Standard.Target.performed -= OnTargetStart;
         this.InputHandler.Standard.Target.canceled -= OnTargetStop;
+        this.InputHandler.Standard.Block.performed -= OnBlockStart;
+        this.InputHandler.Standard.Block.canceled -= OnBlockStop;
 
         this.InputHandler.Disable();
     }
@@ -85,7 +89,8 @@ public class Player : StateMachine, IControllable
     {
         if(other.CompareTag("Enemy Weapon"))
         {
-            this.SetState(new TakeDamageState(this));
+            if (this.state.GetType() != typeof(BlockState) && this.state.GetType() != typeof(TakeDamageState))
+                this.SetState(new TakeDamageState(this));
         }
     }
 
@@ -109,6 +114,17 @@ public class Player : StateMachine, IControllable
     void OnTargetStop(InputAction.CallbackContext context) { this.SetState(new OrbitState(this)); }
     void OnOrbitStart(InputAction.CallbackContext context) { this.Anim.CrossFade("Male_Sword_Walk", 0.2f); }
     void OnOrbitStop(InputAction.CallbackContext context) { this.Anim.CrossFade("Male Sword Stance", 0.2f); }
+    void OnBlockStart(InputAction.CallbackContext context) 
+    {
+        if(this.state.GetType() == typeof(TargetState))
+            this.SetState(new BlockState(this)); 
+    }
+
+    void OnBlockStop(InputAction.CallbackContext context) 
+    {
+        if (this.state.GetType() == typeof(BlockState))
+            this.SetState(new TargetState(this));
+    }
 
     #endregion
 
@@ -141,7 +157,6 @@ public class Player : StateMachine, IControllable
         //TODO add a layermask to diffrientiate what is considered ground
         if(Physics.Raycast(RayOrigin.position, Vector3.down, out hit))
         {
-            float dist = hit.distance;
             if(hit.distance > minFallDistance)
             {
                 this.SetState(new FallingState(this));
