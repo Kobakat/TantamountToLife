@@ -32,13 +32,18 @@ public class TakeDamageState : PlayerState
 
     public sealed override void OnStateEnter()
     {
+        player.health -= 2;
+        
         player.DisableActions(actionsToHandle);
+
 
         SetAnimationInfo();
 
-        Debug.Log(Time.time);
-        Debug.Log(startTime);
-        Debug.Log(startTime + animLength);
+        if (player.health <= 0)
+        {
+            player.SetState(new DyingState(player));
+        }
+        
     }
 
     public sealed override void OnStateExit()
@@ -57,7 +62,6 @@ public class TakeDamageState : PlayerState
 
         this.animLength = player.Anim.runtimeAnimatorController.animationClips[0].length / 2;
 
-        Debug.Log(animLength);
     }
 
     void ReturnToNormalStateWhenAnimationFinishes()

@@ -29,9 +29,12 @@ public class Player : StateMachine, IControllable
     public float MaxSpeed = 5;
     public float TurnSpeed = 1000;
     public float minFallDistance = 1;
+    int layerMask;
 
     public int hitCount = 0;
     public bool queuedAtt = false;
+
+    public int health = 10;
     #endregion
 
     #region Unity Event Functions
@@ -44,6 +47,8 @@ public class Player : StateMachine, IControllable
         this.Cam = this.transform.parent.GetComponentInChildren<Camera>();
         //Then set the state
         this.SetState(state = new OrbitState(this));
+
+        this.layerMask = LayerMask.GetMask("Ground");
     }
 
     void Update()
@@ -89,7 +94,11 @@ public class Player : StateMachine, IControllable
     {
         if(other.CompareTag("Enemy Weapon"))
         {
-            if (this.state.GetType() != typeof(BlockState) && this.state.GetType() != typeof(TakeDamageState))
+            if (
+                this.state.GetType() != typeof(BlockState)
+                && this.state.GetType() != typeof(TakeDamageState)
+                && this.state.GetType() != typeof(DyingState))
+                
                 this.SetState(new TakeDamageState(this));
         }
     }
@@ -154,8 +163,9 @@ public class Player : StateMachine, IControllable
     /// </summary>
     void CheckForFall()
     {
+        
         //TODO add a layermask to diffrientiate what is considered ground
-        if(Physics.Raycast(RayOrigin.position, Vector3.down, out hit))
+        if(Physics.Raycast(RayOrigin.position, Vector3.down, out hit, Mathf.Infinity, layerMask))
         {
             if(hit.distance > minFallDistance)
             {
