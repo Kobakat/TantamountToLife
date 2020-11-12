@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEditor.Animations;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 /// <summary>
 /// Snaps the camera behind the player and holds it steady
@@ -14,9 +15,12 @@ public class TargetCamState : CameraState
     float timer;
     float snapSpeed;
 
+    InputAction[] actionsToHandle;
+
     public TargetCamState(StateMachine s) : base(s) 
     {
         this.snapSpeed = 7;
+        this.actionsToHandle = new InputAction[2] { cam.InputHandler.Standard.FirstPersonCam, cam.InputHandler.Standard.FreeCam };
     }
 
     #region State Events
@@ -28,10 +32,12 @@ public class TargetCamState : CameraState
     public override void StateUpdate() { }
     public override void OnStateEnter() 
     {
+        cam.DisableActions(actionsToHandle);
         base.OnStateEnter(); 
     }
     public override void OnStateExit() 
     {
+        cam.EnableActions(actionsToHandle);
         base.OnStateExit(); 
     }
     #endregion

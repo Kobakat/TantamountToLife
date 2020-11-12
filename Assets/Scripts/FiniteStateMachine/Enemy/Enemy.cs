@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Enemy : StateMachine
 {
-    public Player player;
+    public Player player { get; protected set; }
     public Rigidbody Rb { get; protected set; }
     public Animator Anim { get; protected set; }
     public Collider EnemyCol { get; protected set; }
@@ -14,11 +14,15 @@ public class Enemy : StateMachine
     public PhysicMaterial StopMaterial;
     public PhysicMaterial MoveMaterial;
 
+    [SerializeField] Transform RayOrigin = null;
+    public RaycastHit hit;
+
     public int health = 10;
     
     public float Speed = 3;
     public float TurnSpeed = 1000;
     public float minFallDistance = 1;
+    int layerMask;
 
     public float attackDelay = 1.0f;
 
@@ -26,12 +30,16 @@ public class Enemy : StateMachine
     void Start()
     {
         //Make sure all components are initialized first
+        this.player = (Player)FindObjectOfType(typeof(Player));
+        
         this.Anim = this.GetComponent<Animator>();
         this.Rb = this.GetComponent<Rigidbody>();
         this.EnemyCol = this.GetComponent<CapsuleCollider>();
 
         //Then set the state
         this.SetState(state = new IdleEnemyState(this));
+
+        this.layerMask = LayerMask.GetMask("Ground");
     }
 
     void Update()
@@ -41,21 +49,28 @@ public class Enemy : StateMachine
 
     void FixedUpdate()
     {
+        CheckForFall();
         this.state.StateFixedUpdate();
     }
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Weapon"))
+        if (other.CompareTag("Weapon") && this.state.GetType() != typeof(DyingEnemyState))
         {
-            this.SetState(new DyingEnemyState(this));
+            this.SetState(new TakeDamageEnemyState(this));
+        }
+    }
+
+    void CheckForFall()
+    {
+        if (Physics.Raycast(RayOrigin.position, Vector3.down, out hit, Mathf.Infinity, layerMask))
+        {
+            if (hit.distance > minFallDistance)
+            {
+                this.SetState(new FallingEnemyState(this));
+            }
         }
     }
 
     #endregion
-
-    #region Delegates
-
-    #endregion
-
 }

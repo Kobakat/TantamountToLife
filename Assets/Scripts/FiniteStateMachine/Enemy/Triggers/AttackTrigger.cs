@@ -20,11 +20,9 @@ public class AttackTrigger : MonoBehaviour
 
     void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player"))// && enemy.State.GetType() != typeof(AttackEnemyState))
+        if (other.CompareTag("Player"))
         {
-            enemy.SetState(new PursueEnemyState(enemy));
-
-            
+            enemy.SetState(new PursueEnemyState(enemy));           
         }
     }
 

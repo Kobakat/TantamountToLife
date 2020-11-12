@@ -29,8 +29,7 @@ public class AttackState : PlayerState
 
     public override void StateUpdate()
     {
-        PlayAttackAnimationUntilCompletion();
-        
+        PlayAttackAnimationUntilCompletion();   
     }
 
     public sealed override void StateFixedUpdate() { }
@@ -42,8 +41,6 @@ public class AttackState : PlayerState
         player.hitCount = 1;
 
         PlayAttackAnimation();
-
-        PlayerWeaponColliderEnabled(true); 
 
         base.OnStateEnter();
     }
@@ -67,7 +64,9 @@ public class AttackState : PlayerState
 
     void PlayAttackAnimation()
     {
-        switch(player.hitCount)
+        PlayerWeaponColliderEnabled(true);
+
+        switch (player.hitCount)
         {
             case 1:
                 player.Anim.CrossFade("MaleAttack", 0.05f);

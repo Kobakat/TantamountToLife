@@ -29,9 +29,12 @@ public class Player : StateMachine, IControllable
     public float MaxSpeed = 5;
     public float TurnSpeed = 1000;
     public float minFallDistance = 1;
+    int layerMask;
 
     public int hitCount = 0;
     public bool queuedAtt = false;
+
+    public int health = 10;
     #endregion
 
     #region Unity Event Functions
@@ -44,6 +47,8 @@ public class Player : StateMachine, IControllable
         this.Cam = this.transform.parent.GetComponentInChildren<Camera>();
         //Then set the state
         this.SetState(state = new OrbitState(this));
+
+        this.layerMask = LayerMask.GetMask("Ground");
     }
 
     void Update()
@@ -66,6 +71,8 @@ public class Player : StateMachine, IControllable
         this.InputHandler.Standard.Movement.canceled += OnOrbitStop;
         this.InputHandler.Standard.Target.performed += OnTargetStart;
         this.InputHandler.Standard.Target.canceled += OnTargetStop;
+        this.InputHandler.Standard.Block.performed += OnBlockStart;
+        this.InputHandler.Standard.Block.canceled += OnBlockStop;
 
         this.InputHandler.Enable();
     }
@@ -77,6 +84,8 @@ public class Player : StateMachine, IControllable
         this.InputHandler.Standard.Movement.canceled -= OnOrbitStop;
         this.InputHandler.Standard.Target.performed -= OnTargetStart;
         this.InputHandler.Standard.Target.canceled -= OnTargetStop;
+        this.InputHandler.Standard.Block.performed -= OnBlockStart;
+        this.InputHandler.Standard.Block.canceled -= OnBlockStop;
 
         this.InputHandler.Disable();
     }
@@ -85,7 +94,12 @@ public class Player : StateMachine, IControllable
     {
         if(other.CompareTag("Enemy Weapon"))
         {
-            this.SetState(new TakeDamageState(this));
+            if (
+                this.state.GetType() != typeof(BlockState)
+                && this.state.GetType() != typeof(TakeDamageState)
+                && this.state.GetType() != typeof(DyingState))
+                
+                this.SetState(new TakeDamageState(this));
         }
     }
 
@@ -109,6 +123,17 @@ public class Player : StateMachine, IControllable
     void OnTargetStop(InputAction.CallbackContext context) { this.SetState(new OrbitState(this)); }
     void OnOrbitStart(InputAction.CallbackContext context) { this.Anim.CrossFade("Male_Sword_Walk", 0.2f); }
     void OnOrbitStop(InputAction.CallbackContext context) { this.Anim.CrossFade("Male Sword Stance", 0.2f); }
+    void OnBlockStart(InputAction.CallbackContext context) 
+    {
+        if(this.state.GetType() == typeof(TargetState))
+            this.SetState(new BlockState(this)); 
+    }
+
+    void OnBlockStop(InputAction.CallbackContext context) 
+    {
+        if (this.state.GetType() == typeof(BlockState))
+            this.SetState(new TargetState(this));
+    }
 
     #endregion
 
@@ -137,11 +162,10 @@ public class Player : StateMachine, IControllable
     /// If that distance is too large, the player begins to fall
     /// </summary>
     void CheckForFall()
-    {
+    {      
         //TODO add a layermask to diffrientiate what is considered ground
-        if(Physics.Raycast(RayOrigin.position, Vector3.down, out hit))
+        if(Physics.Raycast(RayOrigin.position, Vector3.down, out hit, Mathf.Infinity, layerMask))
         {
-            float dist = hit.distance;
             if(hit.distance > minFallDistance)
             {
                 this.SetState(new FallingState(this));

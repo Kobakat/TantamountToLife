@@ -57,6 +57,14 @@ public class @InputHandler : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Block"",
+                    ""type"": ""Button"",
+                    ""id"": ""a1730c90-49cf-4292-aea6-987a7e568211"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -257,6 +265,28 @@ public class @InputHandler : IInputActionCollection, IDisposable
                     ""action"": ""FirstPersonCam"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""66dee71b-335e-4a37-8207-b17b5e631c48"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Block"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""213bab83-3951-4df4-af79-6fad8c569433"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Block"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -281,6 +311,7 @@ public class @InputHandler : IInputActionCollection, IDisposable
         m_Standard_Target = m_Standard.FindAction("Target", throwIfNotFound: true);
         m_Standard_FreeCam = m_Standard.FindAction("FreeCam", throwIfNotFound: true);
         m_Standard_FirstPersonCam = m_Standard.FindAction("FirstPersonCam", throwIfNotFound: true);
+        m_Standard_Block = m_Standard.FindAction("Block", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -335,6 +366,7 @@ public class @InputHandler : IInputActionCollection, IDisposable
     private readonly InputAction m_Standard_Target;
     private readonly InputAction m_Standard_FreeCam;
     private readonly InputAction m_Standard_FirstPersonCam;
+    private readonly InputAction m_Standard_Block;
     public struct StandardActions
     {
         private @InputHandler m_Wrapper;
@@ -344,6 +376,7 @@ public class @InputHandler : IInputActionCollection, IDisposable
         public InputAction @Target => m_Wrapper.m_Standard_Target;
         public InputAction @FreeCam => m_Wrapper.m_Standard_FreeCam;
         public InputAction @FirstPersonCam => m_Wrapper.m_Standard_FirstPersonCam;
+        public InputAction @Block => m_Wrapper.m_Standard_Block;
         public InputActionMap Get() { return m_Wrapper.m_Standard; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -368,6 +401,9 @@ public class @InputHandler : IInputActionCollection, IDisposable
                 @FirstPersonCam.started -= m_Wrapper.m_StandardActionsCallbackInterface.OnFirstPersonCam;
                 @FirstPersonCam.performed -= m_Wrapper.m_StandardActionsCallbackInterface.OnFirstPersonCam;
                 @FirstPersonCam.canceled -= m_Wrapper.m_StandardActionsCallbackInterface.OnFirstPersonCam;
+                @Block.started -= m_Wrapper.m_StandardActionsCallbackInterface.OnBlock;
+                @Block.performed -= m_Wrapper.m_StandardActionsCallbackInterface.OnBlock;
+                @Block.canceled -= m_Wrapper.m_StandardActionsCallbackInterface.OnBlock;
             }
             m_Wrapper.m_StandardActionsCallbackInterface = instance;
             if (instance != null)
@@ -387,6 +423,9 @@ public class @InputHandler : IInputActionCollection, IDisposable
                 @FirstPersonCam.started += instance.OnFirstPersonCam;
                 @FirstPersonCam.performed += instance.OnFirstPersonCam;
                 @FirstPersonCam.canceled += instance.OnFirstPersonCam;
+                @Block.started += instance.OnBlock;
+                @Block.performed += instance.OnBlock;
+                @Block.canceled += instance.OnBlock;
             }
         }
     }
@@ -416,5 +455,6 @@ public class @InputHandler : IInputActionCollection, IDisposable
         void OnTarget(InputAction.CallbackContext context);
         void OnFreeCam(InputAction.CallbackContext context);
         void OnFirstPersonCam(InputAction.CallbackContext context);
+        void OnBlock(InputAction.CallbackContext context);
     }
 }

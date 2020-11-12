@@ -52,7 +52,7 @@ public class OrbitState : PlayerState
     void MovePlayer()
     {
         velocity.z = Mathf.Clamp(player.InputDir.sqrMagnitude, 0.0f, 1.0f) * player.Speed;
-        player.Rb.velocity = player.transform.rotation * new Vector3(0.0f, 0.0f, velocity.z) + new Vector3(0.0f, velocity.y, 0.0f);
+        player.Rb.velocity = player.transform.rotation * new Vector3(0.0f, 0.0f, velocity.z) + new Vector3(0.0f, player.Rb.velocity.y, 0.0f);
     }
 
     void Rotate()
