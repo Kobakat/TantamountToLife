@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Enemy : StateMachine
 {
-    public Player player;
+    public Player player { get; protected set; }
     public Rigidbody Rb { get; protected set; }
     public Animator Anim { get; protected set; }
     public Collider EnemyCol { get; protected set; }
@@ -26,6 +26,8 @@ public class Enemy : StateMachine
     void Start()
     {
         //Make sure all components are initialized first
+        this.player = (Player)FindObjectOfType(typeof(Player));
+        
         this.Anim = this.GetComponent<Animator>();
         this.Rb = this.GetComponent<Rigidbody>();
         this.EnemyCol = this.GetComponent<CapsuleCollider>();
@@ -46,21 +48,11 @@ public class Enemy : StateMachine
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Weapon"))
+        if (other.CompareTag("Weapon") && this.state.GetType() != typeof(DyingEnemyState))
         {
-            this.SetState(new DyingEnemyState(this));
-        }
-
-        if(other.CompareTag("Player"))
-        {
-            
+            this.SetState(new TakeDamageEnemyState(this));
         }
     }
 
     #endregion
-
-    #region Delegates
-
-    #endregion
-
 }

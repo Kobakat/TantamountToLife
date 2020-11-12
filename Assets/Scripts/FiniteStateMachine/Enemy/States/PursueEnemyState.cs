@@ -15,11 +15,16 @@ public class PursueEnemyState : EnemyState
 
     public override void OnStateEnter()
     {
+        enemy.EnemyCol.material = enemy.MoveMaterial;
         enemy.Anim.CrossFade("Male_Sword_Walk", 0.1f);
         base.OnStateEnter();
     }
 
-    public override void OnStateExit() { base.OnStateExit(); }
+    public override void OnStateExit() 
+    {
+        enemy.EnemyCol.material = enemy.StopMaterial;
+        base.OnStateExit(); 
+    }
 
 
     public override void StateFixedUpdate() 

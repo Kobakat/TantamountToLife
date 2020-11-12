@@ -56,6 +56,8 @@ public class Player : StateMachine, IControllable
         InputDir = this.InputHandler.Standard.Movement.ReadValue<Vector2>();
 
         this.state.StateUpdate();
+
+        Debug.DrawRay(RayOrigin.position, Vector3.down * 10, Color.red);
     }
 
     void FixedUpdate() 
@@ -162,8 +164,7 @@ public class Player : StateMachine, IControllable
     /// If that distance is too large, the player begins to fall
     /// </summary>
     void CheckForFall()
-    {
-        
+    {      
         //TODO add a layermask to diffrientiate what is considered ground
         if(Physics.Raycast(RayOrigin.position, Vector3.down, out hit, Mathf.Infinity, layerMask))
         {
