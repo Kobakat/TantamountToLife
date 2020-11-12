@@ -14,11 +14,15 @@ public class Enemy : StateMachine
     public PhysicMaterial StopMaterial;
     public PhysicMaterial MoveMaterial;
 
+    [SerializeField] Transform RayOrigin = null;
+    public RaycastHit hit;
+
     public int health = 10;
     
     public float Speed = 3;
     public float TurnSpeed = 1000;
     public float minFallDistance = 1;
+    int layerMask;
 
     public float attackDelay = 1.0f;
 
@@ -34,6 +38,8 @@ public class Enemy : StateMachine
 
         //Then set the state
         this.SetState(state = new IdleEnemyState(this));
+
+        this.layerMask = LayerMask.GetMask("Ground");
     }
 
     void Update()
@@ -43,6 +49,7 @@ public class Enemy : StateMachine
 
     void FixedUpdate()
     {
+        CheckForFall();
         this.state.StateFixedUpdate();
     }
 
@@ -51,6 +58,17 @@ public class Enemy : StateMachine
         if (other.CompareTag("Weapon") && this.state.GetType() != typeof(DyingEnemyState))
         {
             this.SetState(new TakeDamageEnemyState(this));
+        }
+    }
+
+    void CheckForFall()
+    {
+        if (Physics.Raycast(RayOrigin.position, Vector3.down, out hit, Mathf.Infinity, layerMask))
+        {
+            if (hit.distance > minFallDistance)
+            {
+                this.SetState(new FallingEnemyState(this));
+            }
         }
     }
 

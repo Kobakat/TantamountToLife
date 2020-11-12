@@ -56,8 +56,6 @@ public class Player : StateMachine, IControllable
         InputDir = this.InputHandler.Standard.Movement.ReadValue<Vector2>();
 
         this.state.StateUpdate();
-
-        Debug.DrawRay(RayOrigin.position, Vector3.down * 10, Color.red);
     }
 
     void FixedUpdate() 
