@@ -176,21 +176,25 @@ public class Player : StateMachine, IControllable
     }
     #endregion IControllable
 
+    #region Events
+    public static event Action PlayerDeath;
+    public static event Action PlayerDamaged;
+    public static event Action HealthPickup;
+
+    #endregion
+
     /// <summary>
     /// Cast a ray straight down until it hits terrain.
     /// If that distance is too large, the player begins to fall
     /// </summary>
     void CheckForFall()
-    {      
-        if(Physics.Raycast(RayOrigin.position, Vector3.down, out hit, Mathf.Infinity, layerMask))
+    {
+        if (Physics.Raycast(RayOrigin.position, Vector3.down, out hit, Mathf.Infinity, layerMask))
         {
-            if(hit.distance > minFallDistance)
+            if (hit.distance > minFallDistance)
             {
                 this.SetState(new FallingState(this));
             }
         }
     }
-
-    public static event Action PlayerDamaged;
-    public static event Action HealthPickup;
 }

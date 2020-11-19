@@ -16,7 +16,8 @@ public class DyingState : PlayerState
     {
         player.Anim.CrossFade("Male Die", 0.2f);
 
-        DisablePlayer();       
+        DisablePlayer();
+
     }
 
     public override void OnStateExit() { base.OnStateExit(); }
