@@ -157,6 +157,13 @@ public class Player : StateMachine, IControllable
     }
     #endregion IControllable
 
+    #region Events
+
+    public static event Action PlayerDamaged;
+    public static event Action HealthPickup;
+
+    #endregion
+
     /// <summary>
     /// Cast a ray straight down until it hits terrain.
     /// If that distance is too large, the player begins to fall
