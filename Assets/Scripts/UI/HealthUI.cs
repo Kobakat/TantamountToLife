@@ -12,9 +12,9 @@ public class HealthUI : MonoBehaviour
     //TODO swap this to a list. Heart container count may become dynamic at some point
     Image[] hearts;
 
-    [SerializeField] Sprite fullHealthSprite;
-    [SerializeField] Sprite halfHealthSprite;
-    [SerializeField] Sprite emptyHealthSprite;
+    [SerializeField] Sprite fullHealthSprite = null;
+    [SerializeField] Sprite halfHealthSprite = null;
+    [SerializeField] Sprite emptyHealthSprite = null;
 
     #endregion
 
@@ -66,7 +66,6 @@ public class HealthUI : MonoBehaviour
     {
         health = FindObjectOfType<Player>().health;
 
-        //Note that this expects the players full health to be divisible by 2
         hearts = new Image[Mathf.CeilToInt(health / 2.0f)];
 
         //Instantiate all the images for each heart container
@@ -78,8 +77,6 @@ public class HealthUI : MonoBehaviour
             newImage.name = "Heart";
             
             newImage.AddComponent<Image>();
-            newImage.AddComponent<CanvasRenderer>();
-            newImage.AddComponent<RectTransform>();
             
             //References for the necessary components
             Image image = newImage.GetComponent<Image>();

@@ -177,7 +177,7 @@ public class Player : StateMachine, IControllable
     #endregion IControllable
 
     #region Events
-    public static event Action PlayerDeath;
+
     public static event Action PlayerDamaged;
     public static event Action HealthPickup;
 

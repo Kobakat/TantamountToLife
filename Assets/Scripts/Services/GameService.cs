@@ -5,8 +5,8 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 public class GameService : MonoBehaviour
 {
-    [SerializeField] float reloadSceneTime;
-    [SerializeField] Canvas canvas;
+    [SerializeField] float reloadSceneTime = 5.0f;
+    Canvas canvas;
     
     Color color;
     float startTime;
@@ -19,11 +19,11 @@ public class GameService : MonoBehaviour
 
     void OnEnable()
     {
-        Player.PlayerDeath += OnPlayerDeath;
+        DyingState.PlayerDeath += OnPlayerDeath;
     }
     void OnDisable()
     {
-        Player.PlayerDeath -= OnPlayerDeath;
+        DyingState.PlayerDeath -= OnPlayerDeath;
     }
 
     void OnPlayerDeath()
@@ -48,10 +48,17 @@ public class GameService : MonoBehaviour
     /// </summary>
     IEnumerator FadeScreenToBlack(float time)
     {
-        float frac = (Time.time - startTime) / time;
+        float frac = 0;
 
-        color.a = Mathf.Lerp(0, 255, frac);
-
-        yield return new WaitForSeconds(.25f);
+        while (frac < 1)
+        {
+            frac = (Time.time - startTime) / (time - 1);
+            color.a = Mathf.Lerp(0, 1, frac);
+            canvas.transform.Find("FadePanel").GetComponent<Image>().color = color;
+            yield return new WaitForEndOfFrame();
+        }
+       
+        
+       
     }
 }

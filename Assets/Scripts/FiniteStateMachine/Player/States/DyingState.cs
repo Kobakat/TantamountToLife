@@ -1,10 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.SceneManagement;
+﻿using System;
 
 public class DyingState : PlayerState
 {
+    public static event Action PlayerDeath;
     public DyingState(StateMachine s) : base(s)
     {
 
@@ -15,7 +13,7 @@ public class DyingState : PlayerState
     public override void OnStateEnter()
     {
         player.Anim.CrossFade("Male Die", 0.2f);
-
+        PlayerDeath.Invoke();
         DisablePlayer();
 
     }
