@@ -7,7 +7,6 @@ TagManager:
   - Weapon
   - Enemy Weapon
   - Enemy
-  - Health
   layers:
   - Default
   - TransparentFX
