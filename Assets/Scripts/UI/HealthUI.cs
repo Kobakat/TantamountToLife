@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class HealthUI : MonoBehaviour
 {
+    #region Properties
+
     int health;
 
     //TODO swap this to a list. Heart container count may become dynamic at some point
@@ -14,6 +16,10 @@ public class HealthUI : MonoBehaviour
     [SerializeField] Sprite halfHealthSprite;
     [SerializeField] Sprite emptyHealthSprite;
 
+    #endregion
+
+    #region Unity Event Functions
+
     void Start()
     {
         PlaceHeartContainers();
@@ -22,13 +28,37 @@ public class HealthUI : MonoBehaviour
     void OnEnable()
     {
         Player.PlayerDamaged += OnPlayerDamaged;
+        Player.HealthPickup += OnHealthPickUp;
     }
 
     void OnDisable()
     {
         Player.PlayerDamaged -= OnPlayerDamaged;
+        Player.HealthPickup -= OnHealthPickUp;
     }
 
+    #endregion
+
+    #region Events
+    /// <summary>
+    /// Instead of updating the UI every frame, update it when this function is called by an event (player getting hit)
+    /// </summary>
+    void OnPlayerDamaged()
+    {
+        health = FindObjectOfType<Player>().health;
+        UpdateUI();
+    }
+
+    //Maybe health wants to flash differently from when player takes damage
+    void OnHealthPickUp()
+    {
+        health = FindObjectOfType<Player>().health;
+        UpdateUI();
+    }
+
+    #endregion
+
+    #region Logic Functions
     /// <summary>
     /// Instantiates an appropriate number of heart containers and places them in the UI canvas
     /// </summary>
@@ -68,28 +98,24 @@ public class HealthUI : MonoBehaviour
         UpdateUI();
     }
 
-    /// <summary>
-    /// Instead of updating the UI every frame, update it when this function is called by an event (player getting hit)
-    /// </summary>
-    void OnPlayerDamaged()
-    {
-        health = FindObjectOfType<Player>().health;
-        UpdateUI();
-    }
-
     void UpdateUI()
     {
         for(int i = hearts.Length - 1; i > -1; i--)
         {
             int check = (i + 1) * 2;
 
-            if (check > health) 
+            if (check > health)
             {
-                if(check - 1 == health)
+                if (check - 1 == health)
                     hearts[i].sprite = halfHealthSprite;
                 else
                     hearts[i].sprite = emptyHealthSprite;
             }
+
+            else
+                hearts[i].sprite = fullHealthSprite;
         }
     }
+
+    #endregion
 }
