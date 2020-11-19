@@ -35,5 +35,6 @@ public class DyingEnemyState : EnemyState
         enemy.enabled = false;
         enemy.transform.parent.Find("RangeTriggers").gameObject.SetActive(false);
     }
+
     #endregion
 }

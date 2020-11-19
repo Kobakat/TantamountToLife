@@ -163,7 +163,7 @@ public class Player : StateMachine, IControllable
     /// </summary>
     void CheckForFall()
     {      
-        //TODO add a layermask to diffrientiate what is considered ground
+        ///TODO add a layermask to diffrientiate what is considered ground
         if(Physics.Raycast(RayOrigin.position, Vector3.down, out hit, Mathf.Infinity, layerMask))
         {
             if(hit.distance > minFallDistance)
