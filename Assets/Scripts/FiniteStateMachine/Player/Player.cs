@@ -92,33 +92,18 @@ public class Player : StateMachine, IControllable
 
     void OnTriggerEnter(Collider other)
     {
-        //TODO push case logic into functions for readability
-        switch(other.tag)
+        if(other.CompareTag("Enemy Weapon"))
         {
-            case "Enemy Weapon":
-                if (
+            if (
                 this.state.GetType() != typeof(BlockState)
                 && this.state.GetType() != typeof(TakeDamageState)
                 && this.state.GetType() != typeof(DyingState))
-                {
-                    this.SetState(new TakeDamageState(this));
-                    PlayerDamaged.Invoke();
-                }
-                break;
-
-            case "Health":                          
-                //Todo hardcoded health gain value. Design decision?
-                health += 2;
-
-                //HACK hard coded. Replace with max health variable
-                if (health > 10)
-                    health = 10;
-
-                HealthPickup.Invoke();
-                Destroy(other.gameObject);
-
-                break;
-
+            {
+                this.SetState(new TakeDamageState(this));
+                PlayerDamaged.Invoke();
+            }
+                
+                
         }
     }
 
@@ -182,6 +167,7 @@ public class Player : StateMachine, IControllable
     /// </summary>
     void CheckForFall()
     {      
+        //TODO add a layermask to diffrientiate what is considered ground
         if(Physics.Raycast(RayOrigin.position, Vector3.down, out hit, Mathf.Infinity, layerMask))
         {
             if(hit.distance > minFallDistance)
@@ -192,5 +178,4 @@ public class Player : StateMachine, IControllable
     }
 
     public static event Action PlayerDamaged;
-    public static event Action HealthPickup;
 }
