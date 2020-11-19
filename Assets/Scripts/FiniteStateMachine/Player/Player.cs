@@ -98,12 +98,8 @@ public class Player : StateMachine, IControllable
                 this.state.GetType() != typeof(BlockState)
                 && this.state.GetType() != typeof(TakeDamageState)
                 && this.state.GetType() != typeof(DyingState))
-            {
+                
                 this.SetState(new TakeDamageState(this));
-                PlayerDamaged.Invoke();
-            }
-                
-                
         }
     }
 
@@ -176,6 +172,4 @@ public class Player : StateMachine, IControllable
             }
         }
     }
-
-    public static event Action PlayerDamaged;
 }
