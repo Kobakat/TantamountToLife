@@ -22,6 +22,7 @@ public class Player : StateMachine, IControllable
     public Collider Weapon;
     public PhysicMaterial StopMaterial;
     public PhysicMaterial MoveMaterial;
+    public Interactable Interactable { get; set; }
 
     [SerializeField] Transform RayOrigin = null;
 
@@ -73,6 +74,7 @@ public class Player : StateMachine, IControllable
         this.InputHandler.Standard.Target.canceled += OnTargetStop;
         this.InputHandler.Standard.Block.performed += OnBlockStart;
         this.InputHandler.Standard.Block.canceled += OnBlockStop;
+        this.InputHandler.Standard.Interact.performed += OnInteract;
 
         this.InputHandler.Enable();
     }
@@ -86,6 +88,7 @@ public class Player : StateMachine, IControllable
         this.InputHandler.Standard.Target.canceled -= OnTargetStop;
         this.InputHandler.Standard.Block.performed -= OnBlockStart;
         this.InputHandler.Standard.Block.canceled -= OnBlockStop;
+        this.InputHandler.Standard.Interact.performed -= OnInteract;
 
         this.InputHandler.Disable();
     }
@@ -160,6 +163,14 @@ public class Player : StateMachine, IControllable
             this.SetState(new TargetState(this));
     }
 
+    void OnInteract(InputAction.CallbackContext context)
+    {
+        if(Interactable)
+        {
+            Interactable.InteractionEvent();
+        }
+    }
+
     #endregion
 
     #region IControllable
@@ -186,6 +197,7 @@ public class Player : StateMachine, IControllable
 
     public static event Action PlayerDamaged;
     public static event Action HealthPickup;
+    public static event Action InteractionPrompt;
 
     #endregion
 
