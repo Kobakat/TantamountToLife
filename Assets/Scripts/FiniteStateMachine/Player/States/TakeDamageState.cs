@@ -32,10 +32,11 @@ public class TakeDamageState : PlayerState
 
     public sealed override void OnStateEnter()
     {
+        SetMaterialShader("Custom/Character");
+
         player.health -= 2;
         
         player.DisableActions(actionsToHandle);
-
 
         SetAnimationInfo();
 
@@ -49,6 +50,7 @@ public class TakeDamageState : PlayerState
     public sealed override void OnStateExit()
     {
         player.EnableActions(actionsToHandle);
+        SetMaterialShader("Standard (Specular setup)");
     }
     #endregion
 
@@ -63,11 +65,21 @@ public class TakeDamageState : PlayerState
         this.animLength = player.Anim.runtimeAnimatorController.animationClips[0].length / 2;
 
     }
-
     void ReturnToNormalStateWhenAnimationFinishes()
     {
         if (Time.time > startTime + animLength)
             player.SetState(new OrbitState(player));
+    }
+
+    void SetMaterialShader(string shaderPath)
+    {
+        foreach (Material mat in player.Mats)
+        {
+            mat.shader = Shader.Find(shaderPath);
+
+            if (shaderPath == "Custom/Character")
+                mat.SetFloat("_Speed", 15);
+        }
     }
     #endregion
 }

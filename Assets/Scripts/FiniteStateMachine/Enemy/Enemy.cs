@@ -15,6 +15,8 @@ public class Enemy : StateMachine
     public PhysicMaterial MoveMaterial;
 
     [SerializeField] Transform RayOrigin = null;
+    public List<Material> Mats { get; set; }
+
     public RaycastHit hit;
 
     public int health = 10;
@@ -40,6 +42,8 @@ public class Enemy : StateMachine
         this.SetState(state = new IdleEnemyState(this));
 
         this.layerMask = LayerMask.GetMask("Ground");
+
+        GetMaterialsForDamageFlicker();
     }
 
     void Update()
@@ -61,6 +65,8 @@ public class Enemy : StateMachine
         }
     }
 
+    #endregion
+
     void CheckForFall()
     {
         if (Physics.Raycast(RayOrigin.position, Vector3.down, out hit, Mathf.Infinity, layerMask))
@@ -72,5 +78,16 @@ public class Enemy : StateMachine
         }
     }
 
-    #endregion
+    void GetMaterialsForDamageFlicker()
+    {
+        SkinnedMeshRenderer[] renderers = transform.parent.GetComponentsInChildren<SkinnedMeshRenderer>();
+        this.Mats = new List<Material>();
+        foreach (SkinnedMeshRenderer renderer in renderers)
+        {
+            for (int i = 0; i < renderer.materials.Length; i++)
+                this.Mats.Add(renderer.materials[i]);
+        }
+    }
+
+    
 }

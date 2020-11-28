@@ -25,6 +25,7 @@ public class Player : StateMachine, IControllable
     public List<Interactable> Interactables;
 
     [SerializeField] Transform RayOrigin = null;
+    public List<Material> Mats { get; set; }
 
     public float Speed = 3;
     public float MaxSpeed = 5;
@@ -51,6 +52,8 @@ public class Player : StateMachine, IControllable
         this.SetState(state = new OrbitState(this));
         this.Interactables = new List<Interactable>();
         this.layerMask = LayerMask.GetMask("Ground");
+
+        GetMaterialsForDamageFlicker();
     }
 
     void Update()
@@ -239,6 +242,17 @@ public class Player : StateMachine, IControllable
             {
                 this.SetState(new FallingState(this));
             }
+        }
+    }
+
+    void GetMaterialsForDamageFlicker()
+    {
+        SkinnedMeshRenderer[] renderers = transform.parent.GetComponentsInChildren<SkinnedMeshRenderer>();
+        this.Mats = new List<Material>();
+        foreach (SkinnedMeshRenderer renderer in renderers)
+        {
+            for(int i = 0; i < renderer.materials.Length; i++)
+                this.Mats.Add(renderer.materials[i]);
         }
     }
 }
