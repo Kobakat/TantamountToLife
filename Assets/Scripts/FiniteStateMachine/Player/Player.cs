@@ -22,7 +22,7 @@ public class Player : StateMachine, IControllable
     public Collider Weapon;
     public PhysicMaterial StopMaterial;
     public PhysicMaterial MoveMaterial;
-    public Interactable Interactable { get; set; }
+    public List<Interactable> Interactables;
 
     [SerializeField] Transform RayOrigin = null;
 
@@ -36,6 +36,7 @@ public class Player : StateMachine, IControllable
     public bool queuedAtt = false;
 
     public int health = 10;
+    public static int gold = 0;
     #endregion
 
     #region Unity Event Functions
@@ -48,7 +49,7 @@ public class Player : StateMachine, IControllable
         this.Cam = this.transform.parent.GetComponentInChildren<Camera>();
         //Then set the state
         this.SetState(state = new OrbitState(this));
-
+        this.Interactables = new List<Interactable>();
         this.layerMask = LayerMask.GetMask("Ground");
     }
 
@@ -165,10 +166,23 @@ public class Player : StateMachine, IControllable
 
     void OnInteract(InputAction.CallbackContext context)
     {
-        if(Interactable)
+        List<Interactable> interactablesToDispose = new List<Interactable>();
+
+        foreach(Interactable interactable in this.Interactables)
         {
-            Interactable.InteractionEvent();
+            if (interactable)
+            {
+                interactable.InteractionEvent();
+                interactablesToDispose.Add(interactable);
+            }
         }
+        
+        foreach(Interactable interactable in interactablesToDispose)
+        {
+            this.Interactables.Remove(interactable);
+        }
+
+        interactablesToDispose.Clear();
     }
 
     #endregion
