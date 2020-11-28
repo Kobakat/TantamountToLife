@@ -92,6 +92,31 @@ public class Player : StateMachine, IControllable
 
     void OnTriggerEnter(Collider other)
     {
+        switch(other.tag)
+        {
+            case "Enemy Weapon":
+                if  (
+                this.state.GetType() != typeof(BlockState)
+                && this.state.GetType() != typeof(TakeDamageState)
+                && this.state.GetType() != typeof(DyingState))
+                {
+                    this.SetState(new TakeDamageState(this));
+                    PlayerDamaged.Invoke();
+                }
+                break;
+
+            case "Health":
+                health += 2;
+
+                if (health > 10)
+                    health = 10;
+
+                HealthPickup.Invoke();
+                Destroy(other.gameObject);
+                break;
+
+                    
+        }
         if(other.CompareTag("Enemy Weapon"))
         {
             if (
