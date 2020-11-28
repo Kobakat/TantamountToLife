@@ -96,6 +96,8 @@ public class Player : StateMachine, IControllable
 
     void OnTriggerEnter(Collider other)
     {
+        InteractionPrompt.Invoke(this.Interactables.Count > 0);
+
         switch(other.tag)
         {
             case "Enemy Weapon":
@@ -130,6 +132,11 @@ public class Player : StateMachine, IControllable
                 
                 this.SetState(new TakeDamageState(this));
         }
+    }
+
+    void OnTriggerExit()
+    {
+        InteractionPrompt.Invoke(this.Interactables.Count > 0);
     }
 
     #endregion
@@ -183,6 +190,8 @@ public class Player : StateMachine, IControllable
         }
 
         interactablesToDispose.Clear();
+
+        InteractionPrompt.Invoke(this.Interactables.Count > 0);
     }
 
     #endregion
@@ -211,7 +220,7 @@ public class Player : StateMachine, IControllable
 
     public static event Action PlayerDamaged;
     public static event Action HealthPickup;
-    public static event Action InteractionPrompt;
+    public static event Action<bool> InteractionPrompt;
 
     #endregion
 
