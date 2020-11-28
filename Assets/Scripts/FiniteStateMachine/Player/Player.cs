@@ -192,6 +192,7 @@ public class Player : StateMachine, IControllable
         interactablesToDispose.Clear();
 
         InteractionPrompt.Invoke(this.Interactables.Count > 0);
+        GoldPickup.Invoke();
     }
 
     #endregion
@@ -220,6 +221,7 @@ public class Player : StateMachine, IControllable
 
     public static event Action PlayerDamaged;
     public static event Action HealthPickup;
+    public static event Action GoldPickup;
     public static event Action<bool> InteractionPrompt;
 
     #endregion
