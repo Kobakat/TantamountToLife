@@ -33,10 +33,12 @@ public class Player : StateMachine, IControllable
     public float minFallDistance = 1;
     int layerMask;
 
-    public int hitCount = 0;
-    public bool queuedAtt = false;
+    public int hitCount { get; set; }
+    public bool queuedAtt { get; set; }
+    public bool isVulnerable { get; set; }
 
     public int health = 10;
+    public float invulnerabilityTime = 3;
     public static int gold = 0;
     #endregion
 
@@ -48,9 +50,11 @@ public class Player : StateMachine, IControllable
         this.Rb = this.GetComponent<Rigidbody>();
         this.PlayerCol = this.GetComponent<CapsuleCollider>();
         this.Cam = this.transform.parent.GetComponentInChildren<Camera>();
-        //Then set the state
-        this.SetState(state = new OrbitState(this));
         this.Interactables = new List<Interactable>();
+
+        //Then state info
+        this.SetState(state = new OrbitState(this));
+        this.isVulnerable = true;
         this.layerMask = LayerMask.GetMask("Ground");
 
         GetMaterialsForDamageFlicker();
@@ -104,10 +108,7 @@ public class Player : StateMachine, IControllable
         switch(other.tag)
         {
             case "Enemy Weapon":
-                if  (
-                this.state.GetType() != typeof(BlockState)
-                && this.state.GetType() != typeof(TakeDamageState)
-                && this.state.GetType() != typeof(DyingState))
+                if  (isVulnerable) 
                 {
                     this.SetState(new TakeDamageState(this));
                     PlayerDamaged.Invoke();
@@ -125,15 +126,6 @@ public class Player : StateMachine, IControllable
                 break;
 
                     
-        }
-        if(other.CompareTag("Enemy Weapon"))
-        {
-            if (
-                this.state.GetType() != typeof(BlockState)
-                && this.state.GetType() != typeof(TakeDamageState)
-                && this.state.GetType() != typeof(DyingState))
-                
-                this.SetState(new TakeDamageState(this));
         }
     }
 

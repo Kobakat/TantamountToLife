@@ -14,8 +14,8 @@ public class DyingState : PlayerState
     {
         player.Anim.CrossFade("Male Die", 0.2f);
         PlayerDeath.Invoke();
+        player.isVulnerable = false;
         DisablePlayer();
-
     }
 
     public override void OnStateExit() { base.OnStateExit(); }
