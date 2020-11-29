@@ -3943,5 +3943,10 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.6234999
       objectReference: {fileID: 0}
+    - target: {fileID: 7695433118176725766, guid: 0d6c11b5643f71f4f87fa1db87a1b2af,
+        type: 3}
+      propertyPath: m_EnableCollision
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0d6c11b5643f71f4f87fa1db87a1b2af, type: 3}

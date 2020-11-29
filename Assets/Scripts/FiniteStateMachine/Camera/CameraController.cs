@@ -24,6 +24,8 @@ public class CameraController : StateMachine, IControllable
     public float firstPersonXClamp;
     public float firstPersonYClamp;
 
+
+    
     #endregion
 
     #region Unity Event Functions
@@ -54,6 +56,7 @@ public class CameraController : StateMachine, IControllable
     {
         this.InputDir = InputHandler.Standard.FreeCam.ReadValue<Vector2>();
         this.state.StateUpdate();
+        CheckForWallColiision();
     }
 
     void FixedUpdate() { this.state.StateFixedUpdate(); }
@@ -99,5 +102,22 @@ public class CameraController : StateMachine, IControllable
                 action.Disable();
         }
     }
+    #endregion
+
+    #region Wall Collision
+
+    void CheckForWallColiision()
+    {
+        RaycastHit hit = new RaycastHit();
+
+        if (Physics.Linecast(target.position, transform.position, out hit))
+        {           
+            if(hit.transform.gameObject.CompareTag("Untagged")) 
+            {
+                this.transform.position = new Vector3(hit.point.x, hit.point.y, hit.point.z);
+            }
+        }
+    }
+
     #endregion
 }
