@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1769323217219597927}
   - component: {fileID: 7653649519559489612}
   - component: {fileID: 568655391028429061}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: ingot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -90,7 +90,7 @@ GameObject:
   - component: {fileID: 7231055900167620132}
   - component: {fileID: 5608269911432460904}
   - component: {fileID: 7600445486799422731}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: ingot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -169,7 +169,7 @@ GameObject:
   - component: {fileID: 4747552785695356828}
   - component: {fileID: 4341283703638747988}
   - component: {fileID: 6067047155428049779}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: ingot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -248,7 +248,7 @@ GameObject:
   - component: {fileID: 1618215148752453741}
   - component: {fileID: 7307116816613001319}
   - component: {fileID: 1493936081480627361}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: GoldPile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -312,7 +312,7 @@ GameObject:
   - component: {fileID: 2911583515919242200}
   - component: {fileID: 7025710156649407538}
   - component: {fileID: 999582519450966129}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: ingot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -391,7 +391,7 @@ GameObject:
   - component: {fileID: 2795111547445161003}
   - component: {fileID: 5812822998535479127}
   - component: {fileID: 5082753451242750811}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: ingot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -470,7 +470,7 @@ GameObject:
   - component: {fileID: 5077036362221679630}
   - component: {fileID: 6388511157754605063}
   - component: {fileID: 3819453498998765714}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: ingot
   m_TagString: Untagged
   m_Icon: {fileID: 0}

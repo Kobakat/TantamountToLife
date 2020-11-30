@@ -31,6 +31,7 @@ public class Player : StateMachine, IControllable
     public float MaxSpeed = 5;
     public float TurnSpeed = 1000;
     public float minFallDistance = 1;
+    public float maxNormalToSlide = 30.0f;
     int layerMask;
 
     public int hitCount { get; set; }
@@ -226,13 +227,26 @@ public class Player : StateMachine, IControllable
     /// If that distance is too large, the player begins to fall
     /// </summary>
     void CheckForFall()
-    {      
-        ///TODO add a layermask to diffrientiate what is considered ground
+    {
+        //this.transform.rotation = Quaternion.Euler(0, 0, 0);
         if(Physics.Raycast(RayOrigin.position, Vector3.down, out hit, Mathf.Infinity, layerMask))
         {
-            if(hit.distance > minFallDistance)
+            //Todo make this more abstract
+            this.Speed = 3;
+
+            if (hit.distance > minFallDistance)
             {
+                
                 this.SetState(new FallingState(this));
+            }
+
+            else
+            {
+                if (Vector3.Angle(Vector3.up, hit.normal) > maxNormalToSlide)
+                {
+                    this.Speed = 0;
+                }
+                    
             }
         }
     }

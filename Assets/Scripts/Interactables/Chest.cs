@@ -33,7 +33,7 @@ public class Chest : Interactable
 
     void SpawnLoot()
     {
-        Instantiate(LootType, spawn1.position, spawn1.rotation);
-        Instantiate(LootType, spawn2.position, spawn2.rotation);
+        Instantiate(LootType, spawn1.position, spawn1.rotation, this.transform);
+        Instantiate(LootType, spawn2.position, spawn2.rotation, this.transform);
     }
 }

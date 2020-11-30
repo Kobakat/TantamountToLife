@@ -112,7 +112,7 @@ public class CameraController : StateMachine, IControllable
 
         if (Physics.Linecast(target.position, transform.position, out hit))
         {           
-            if(hit.transform.gameObject.CompareTag("Untagged")) 
+            if(hit.transform.gameObject.CompareTag("Untagged") && hit.transform.gameObject.CompareTag("Enemy")) 
             {
                 this.transform.position = new Vector3(hit.point.x, hit.point.y, hit.point.z);
             }
