@@ -65,6 +65,14 @@ public class @InputHandler : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Interact"",
+                    ""type"": ""Button"",
+                    ""id"": ""9ab969a7-cfc1-4935-aae8-5b3b6181c531"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -287,6 +295,28 @@ public class @InputHandler : IInputActionCollection, IDisposable
                     ""action"": ""Block"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d1daba45-c52e-420e-acd2-1c6d1fd9e7e4"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""37f710c1-da7c-4492-80e8-84db537a9c4d"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -312,6 +342,7 @@ public class @InputHandler : IInputActionCollection, IDisposable
         m_Standard_FreeCam = m_Standard.FindAction("FreeCam", throwIfNotFound: true);
         m_Standard_FirstPersonCam = m_Standard.FindAction("FirstPersonCam", throwIfNotFound: true);
         m_Standard_Block = m_Standard.FindAction("Block", throwIfNotFound: true);
+        m_Standard_Interact = m_Standard.FindAction("Interact", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -367,6 +398,7 @@ public class @InputHandler : IInputActionCollection, IDisposable
     private readonly InputAction m_Standard_FreeCam;
     private readonly InputAction m_Standard_FirstPersonCam;
     private readonly InputAction m_Standard_Block;
+    private readonly InputAction m_Standard_Interact;
     public struct StandardActions
     {
         private @InputHandler m_Wrapper;
@@ -377,6 +409,7 @@ public class @InputHandler : IInputActionCollection, IDisposable
         public InputAction @FreeCam => m_Wrapper.m_Standard_FreeCam;
         public InputAction @FirstPersonCam => m_Wrapper.m_Standard_FirstPersonCam;
         public InputAction @Block => m_Wrapper.m_Standard_Block;
+        public InputAction @Interact => m_Wrapper.m_Standard_Interact;
         public InputActionMap Get() { return m_Wrapper.m_Standard; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -404,6 +437,9 @@ public class @InputHandler : IInputActionCollection, IDisposable
                 @Block.started -= m_Wrapper.m_StandardActionsCallbackInterface.OnBlock;
                 @Block.performed -= m_Wrapper.m_StandardActionsCallbackInterface.OnBlock;
                 @Block.canceled -= m_Wrapper.m_StandardActionsCallbackInterface.OnBlock;
+                @Interact.started -= m_Wrapper.m_StandardActionsCallbackInterface.OnInteract;
+                @Interact.performed -= m_Wrapper.m_StandardActionsCallbackInterface.OnInteract;
+                @Interact.canceled -= m_Wrapper.m_StandardActionsCallbackInterface.OnInteract;
             }
             m_Wrapper.m_StandardActionsCallbackInterface = instance;
             if (instance != null)
@@ -426,6 +462,9 @@ public class @InputHandler : IInputActionCollection, IDisposable
                 @Block.started += instance.OnBlock;
                 @Block.performed += instance.OnBlock;
                 @Block.canceled += instance.OnBlock;
+                @Interact.started += instance.OnInteract;
+                @Interact.performed += instance.OnInteract;
+                @Interact.canceled += instance.OnInteract;
             }
         }
     }
@@ -456,5 +495,6 @@ public class @InputHandler : IInputActionCollection, IDisposable
         void OnFreeCam(InputAction.CallbackContext context);
         void OnFirstPersonCam(InputAction.CallbackContext context);
         void OnBlock(InputAction.CallbackContext context);
+        void OnInteract(InputAction.CallbackContext context);
     }
 }

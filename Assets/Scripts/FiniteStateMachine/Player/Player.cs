@@ -22,19 +22,25 @@ public class Player : StateMachine, IControllable
     public Collider Weapon;
     public PhysicMaterial StopMaterial;
     public PhysicMaterial MoveMaterial;
+    public List<Interactable> Interactables;
 
     [SerializeField] Transform RayOrigin = null;
+    public List<Material> Mats { get; set; }
 
     public float Speed = 3;
     public float MaxSpeed = 5;
     public float TurnSpeed = 1000;
     public float minFallDistance = 1;
+    public float maxNormalToSlide = 30.0f;
     int layerMask;
 
-    public int hitCount = 0;
-    public bool queuedAtt = false;
+    public int hitCount { get; set; }
+    public bool queuedAtt { get; set; }
+    public bool isVulnerable { get; set; }
 
     public int health = 10;
+    public float invulnerabilityTime = 3;
+    public static int gold = 0;
     #endregion
 
     #region Unity Event Functions
@@ -45,10 +51,14 @@ public class Player : StateMachine, IControllable
         this.Rb = this.GetComponent<Rigidbody>();
         this.PlayerCol = this.GetComponent<CapsuleCollider>();
         this.Cam = this.transform.parent.GetComponentInChildren<Camera>();
-        //Then set the state
-        this.SetState(state = new OrbitState(this));
+        this.Interactables = new List<Interactable>();
 
+        //Then state info
+        this.SetState(state = new OrbitState(this));
+        this.isVulnerable = true;
         this.layerMask = LayerMask.GetMask("Ground");
+
+        GetMaterialsForDamageFlicker();
     }
 
     void Update()
@@ -73,6 +83,7 @@ public class Player : StateMachine, IControllable
         this.InputHandler.Standard.Target.canceled += OnTargetStop;
         this.InputHandler.Standard.Block.performed += OnBlockStart;
         this.InputHandler.Standard.Block.canceled += OnBlockStop;
+        this.InputHandler.Standard.Interact.performed += OnInteract;
 
         this.InputHandler.Enable();
     }
@@ -86,21 +97,42 @@ public class Player : StateMachine, IControllable
         this.InputHandler.Standard.Target.canceled -= OnTargetStop;
         this.InputHandler.Standard.Block.performed -= OnBlockStart;
         this.InputHandler.Standard.Block.canceled -= OnBlockStop;
+        this.InputHandler.Standard.Interact.performed -= OnInteract;
 
         this.InputHandler.Disable();
     }
 
     void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("Enemy Weapon"))
+        InteractionPrompt.Invoke(this.Interactables.Count > 0);
+
+        switch(other.tag)
         {
-            if (
-                this.state.GetType() != typeof(BlockState)
-                && this.state.GetType() != typeof(TakeDamageState)
-                && this.state.GetType() != typeof(DyingState))
-                
-                this.SetState(new TakeDamageState(this));
+            case "Enemy Weapon":
+                if  (isVulnerable) 
+                {
+                    this.SetState(new TakeDamageState(this));
+                    PlayerDamaged.Invoke();
+                }
+                break;
+
+            case "Health":
+                health += 2;
+
+                if (health > 10)
+                    health = 10;
+
+                HealthPickup.Invoke();
+                Destroy(other.gameObject);
+                break;
+
+                    
         }
+    }
+
+    void OnTriggerExit()
+    {
+        InteractionPrompt.Invoke(this.Interactables.Count > 0);
     }
 
     #endregion
@@ -135,6 +167,30 @@ public class Player : StateMachine, IControllable
             this.SetState(new TargetState(this));
     }
 
+    void OnInteract(InputAction.CallbackContext context)
+    {
+        List<Interactable> interactablesToDispose = new List<Interactable>();
+
+        foreach(Interactable interactable in this.Interactables)
+        {
+            if (interactable)
+            {
+                interactable.InteractionEvent();
+                interactablesToDispose.Add(interactable);
+            }
+        }
+        
+        foreach(Interactable interactable in interactablesToDispose)
+        {
+            this.Interactables.Remove(interactable);
+        }
+
+        interactablesToDispose.Clear();
+
+        InteractionPrompt.Invoke(this.Interactables.Count > 0);
+        GoldPickup.Invoke();
+    }
+
     #endregion
 
     #region IControllable
@@ -161,6 +217,8 @@ public class Player : StateMachine, IControllable
 
     public static event Action PlayerDamaged;
     public static event Action HealthPickup;
+    public static event Action GoldPickup;
+    public static event Action<bool> InteractionPrompt;
 
     #endregion
 
@@ -169,14 +227,38 @@ public class Player : StateMachine, IControllable
     /// If that distance is too large, the player begins to fall
     /// </summary>
     void CheckForFall()
-    {      
-        ///TODO add a layermask to diffrientiate what is considered ground
+    {
+        //this.transform.rotation = Quaternion.Euler(0, 0, 0);
         if(Physics.Raycast(RayOrigin.position, Vector3.down, out hit, Mathf.Infinity, layerMask))
         {
-            if(hit.distance > minFallDistance)
+            //Todo make this more abstract
+            this.Speed = 3;
+
+            if (hit.distance > minFallDistance)
             {
+                
                 this.SetState(new FallingState(this));
             }
+
+            else
+            {
+                if (Vector3.Angle(Vector3.up, hit.normal) > maxNormalToSlide)
+                {
+                    this.Speed = 0;
+                }
+                    
+            }
+        }
+    }
+
+    void GetMaterialsForDamageFlicker()
+    {
+        SkinnedMeshRenderer[] renderers = transform.parent.GetComponentsInChildren<SkinnedMeshRenderer>();
+        this.Mats = new List<Material>();
+        foreach (SkinnedMeshRenderer renderer in renderers)
+        {
+            for(int i = 0; i < renderer.materials.Length; i++)
+                this.Mats.Add(renderer.materials[i]);
         }
     }
 }

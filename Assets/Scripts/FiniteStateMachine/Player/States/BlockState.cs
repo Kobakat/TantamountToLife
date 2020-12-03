@@ -13,11 +13,13 @@ public class BlockState : TargetState
     public sealed override void OnStateEnter()
     {
         player.Anim.CrossFade("Male Sword Block", 0.2f);
+        player.isVulnerable = false;
         base.OnStateEnter();
     }
 
     public sealed override void OnStateExit()
     {
+        player.isVulnerable = true;
         base.OnStateExit();
     }
 

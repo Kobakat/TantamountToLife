@@ -38,6 +38,7 @@ public class FreeCamState : CameraState
     public override void StateFixedUpdate()
     {
         SetTargetRotation();
+        NormalizeDistance();
     }
 
     public override void StateUpdate() 
@@ -77,6 +78,14 @@ public class FreeCamState : CameraState
             inputY,
             inputX,
             0);
+    }
+
+    void NormalizeDistance()
+    {
+        Vector3 vec = cam.transform.position - target.position;
+        vec = vec.normalized;
+
+        cam.transform.position = target.position + vec * cam.distFromPlayer;
     }
     #endregion
 }

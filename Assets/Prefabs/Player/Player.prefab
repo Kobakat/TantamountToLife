@@ -45,72 +45,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 6724291073644531857}
   offset: {x: 0, y: 0.5, z: 0}
---- !u!54 &6719758857973213241
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6720798605072869241}
-  serializedVersion: 2
-  m_Mass: 65
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 112
-  m_CollisionDetection: 0
---- !u!136 &6719758857973213242
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6720798605072869241}
-  m_Material: {fileID: 13400000, guid: eb112ef2bc24fc74c945ed2afaf8fb53, type: 2}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.4
-  m_Height: 1.8
-  m_Direction: 1
-  m_Center: {x: 0, y: 0.9, z: 0}
---- !u!114 &6719758857973213243
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6720798605072869241}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b4b5bd240163da94a9551226a3882517, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Weapon: {fileID: 6719758858146493845}
-  StopMaterial: {fileID: 13400000, guid: eb112ef2bc24fc74c945ed2afaf8fb53, type: 2}
-  MoveMaterial: {fileID: 13400000, guid: 9b00ff7b1baf7a64eb32155b1ee78575, type: 2}
-  RayOrigin: {fileID: 6719758859506672840}
-  Speed: 3
-  MaxSpeed: 5
-  TurnSpeed: 1000
-  minFallDistance: 0.3
-  hitCount: 0
-  queuedAtt: 0
---- !u!64 &6719758858146493845
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6720595703828541703}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 0
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: ffa463f78df756248bd71544ae012994, type: 3}
 --- !u!1 &6719758858563646381
 GameObject:
   m_ObjectHideFlags: 0
@@ -291,6 +225,74 @@ Transform:
   m_Father: {fileID: 6724291073644531857}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!64 &6719758858146493845
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6720595703828541703}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 0
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300000, guid: ffa463f78df756248bd71544ae012994, type: 3}
+--- !u!54 &6719758857973213241
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6720798605072869241}
+  serializedVersion: 2
+  m_Mass: 65
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 0
+--- !u!136 &6719758857973213242
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6720798605072869241}
+  m_Material: {fileID: 13400000, guid: eb112ef2bc24fc74c945ed2afaf8fb53, type: 2}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.4
+  m_Height: 1.8
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.9, z: 0}
+--- !u!114 &6719758857973213243
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6720798605072869241}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4b5bd240163da94a9551226a3882517, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Weapon: {fileID: 6719758858146493845}
+  StopMaterial: {fileID: 13400000, guid: eb112ef2bc24fc74c945ed2afaf8fb53, type: 2}
+  MoveMaterial: {fileID: 13400000, guid: 9b00ff7b1baf7a64eb32155b1ee78575, type: 2}
+  SlideMaterial: {fileID: 13400000, guid: b5570ae17392dc84588d0241b337cdf5, type: 2}
+  Interactables: []
+  RayOrigin: {fileID: 6719758859506672840}
+  Speed: 3
+  MaxSpeed: 5
+  TurnSpeed: 1000
+  minFallDistance: 0.3
+  health: 10
+  invulnerabilityTime: 3
 --- !u!1001 &6719758858076106001
 PrefabInstance:
   m_ObjectHideFlags: 0

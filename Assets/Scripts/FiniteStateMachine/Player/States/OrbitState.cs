@@ -32,7 +32,7 @@ public class OrbitState : PlayerState
 
     public sealed override void OnStateEnter()
     {
-        player.Anim.CrossFade("Male Sword Stance", .2f);
+        player.Anim.CrossFade("Male Sword Stance", .1f);
         player.PlayerCol.material = player.MoveMaterial;
         
         base.OnStateEnter();
