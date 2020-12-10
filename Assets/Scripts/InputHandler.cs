@@ -51,22 +51,6 @@ public class @InputHandler : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""FirstPersonCam"",
-                    ""type"": ""Button"",
-                    ""id"": ""3504b319-435f-41fd-b19f-b8a939d4c706"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """"
-                },
-                {
-                    ""name"": ""Block"",
-                    ""type"": ""Button"",
-                    ""id"": ""a1730c90-49cf-4292-aea6-987a7e568211"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """"
-                },
-                {
                     ""name"": ""Interact"",
                     ""type"": ""Button"",
                     ""id"": ""9ab969a7-cfc1-4935-aae8-5b3b6181c531"",
@@ -156,7 +140,7 @@ public class @InputHandler : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""2388674f-fbee-4412-9c6d-a145843d62e7"",
-                    ""path"": ""<Mouse>/leftButton"",
+                    ""path"": ""<Keyboard>/space"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
@@ -254,50 +238,6 @@ public class @InputHandler : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""416c138a-42ed-452b-a8e2-2d9dd0f71eb2"",
-                    ""path"": ""<Gamepad>/dpad/up"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""FirstPersonCam"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""6b5b8554-ab0d-40e2-8ee8-4bf3e0d933ab"",
-                    ""path"": ""<Keyboard>/f"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard"",
-                    ""action"": ""FirstPersonCam"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""66dee71b-335e-4a37-8207-b17b5e631c48"",
-                    ""path"": ""<Gamepad>/rightTrigger"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""Block"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""213bab83-3951-4df4-af79-6fad8c569433"",
-                    ""path"": ""<Mouse>/rightButton"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard"",
-                    ""action"": ""Block"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""d1daba45-c52e-420e-acd2-1c6d1fd9e7e4"",
                     ""path"": ""<Keyboard>/space"",
                     ""interactions"": """",
@@ -340,8 +280,6 @@ public class @InputHandler : IInputActionCollection, IDisposable
         m_Standard_Attack = m_Standard.FindAction("Attack", throwIfNotFound: true);
         m_Standard_Target = m_Standard.FindAction("Target", throwIfNotFound: true);
         m_Standard_FreeCam = m_Standard.FindAction("FreeCam", throwIfNotFound: true);
-        m_Standard_FirstPersonCam = m_Standard.FindAction("FirstPersonCam", throwIfNotFound: true);
-        m_Standard_Block = m_Standard.FindAction("Block", throwIfNotFound: true);
         m_Standard_Interact = m_Standard.FindAction("Interact", throwIfNotFound: true);
     }
 
@@ -396,8 +334,6 @@ public class @InputHandler : IInputActionCollection, IDisposable
     private readonly InputAction m_Standard_Attack;
     private readonly InputAction m_Standard_Target;
     private readonly InputAction m_Standard_FreeCam;
-    private readonly InputAction m_Standard_FirstPersonCam;
-    private readonly InputAction m_Standard_Block;
     private readonly InputAction m_Standard_Interact;
     public struct StandardActions
     {
@@ -407,8 +343,6 @@ public class @InputHandler : IInputActionCollection, IDisposable
         public InputAction @Attack => m_Wrapper.m_Standard_Attack;
         public InputAction @Target => m_Wrapper.m_Standard_Target;
         public InputAction @FreeCam => m_Wrapper.m_Standard_FreeCam;
-        public InputAction @FirstPersonCam => m_Wrapper.m_Standard_FirstPersonCam;
-        public InputAction @Block => m_Wrapper.m_Standard_Block;
         public InputAction @Interact => m_Wrapper.m_Standard_Interact;
         public InputActionMap Get() { return m_Wrapper.m_Standard; }
         public void Enable() { Get().Enable(); }
@@ -431,12 +365,6 @@ public class @InputHandler : IInputActionCollection, IDisposable
                 @FreeCam.started -= m_Wrapper.m_StandardActionsCallbackInterface.OnFreeCam;
                 @FreeCam.performed -= m_Wrapper.m_StandardActionsCallbackInterface.OnFreeCam;
                 @FreeCam.canceled -= m_Wrapper.m_StandardActionsCallbackInterface.OnFreeCam;
-                @FirstPersonCam.started -= m_Wrapper.m_StandardActionsCallbackInterface.OnFirstPersonCam;
-                @FirstPersonCam.performed -= m_Wrapper.m_StandardActionsCallbackInterface.OnFirstPersonCam;
-                @FirstPersonCam.canceled -= m_Wrapper.m_StandardActionsCallbackInterface.OnFirstPersonCam;
-                @Block.started -= m_Wrapper.m_StandardActionsCallbackInterface.OnBlock;
-                @Block.performed -= m_Wrapper.m_StandardActionsCallbackInterface.OnBlock;
-                @Block.canceled -= m_Wrapper.m_StandardActionsCallbackInterface.OnBlock;
                 @Interact.started -= m_Wrapper.m_StandardActionsCallbackInterface.OnInteract;
                 @Interact.performed -= m_Wrapper.m_StandardActionsCallbackInterface.OnInteract;
                 @Interact.canceled -= m_Wrapper.m_StandardActionsCallbackInterface.OnInteract;
@@ -456,12 +384,6 @@ public class @InputHandler : IInputActionCollection, IDisposable
                 @FreeCam.started += instance.OnFreeCam;
                 @FreeCam.performed += instance.OnFreeCam;
                 @FreeCam.canceled += instance.OnFreeCam;
-                @FirstPersonCam.started += instance.OnFirstPersonCam;
-                @FirstPersonCam.performed += instance.OnFirstPersonCam;
-                @FirstPersonCam.canceled += instance.OnFirstPersonCam;
-                @Block.started += instance.OnBlock;
-                @Block.performed += instance.OnBlock;
-                @Block.canceled += instance.OnBlock;
                 @Interact.started += instance.OnInteract;
                 @Interact.performed += instance.OnInteract;
                 @Interact.canceled += instance.OnInteract;
@@ -493,8 +415,6 @@ public class @InputHandler : IInputActionCollection, IDisposable
         void OnAttack(InputAction.CallbackContext context);
         void OnTarget(InputAction.CallbackContext context);
         void OnFreeCam(InputAction.CallbackContext context);
-        void OnFirstPersonCam(InputAction.CallbackContext context);
-        void OnBlock(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
     }
 }

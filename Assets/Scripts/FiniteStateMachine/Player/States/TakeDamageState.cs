@@ -11,12 +11,11 @@ public class TakeDamageState : PlayerState
 
     public TakeDamageState(StateMachine s) : base(s)
     {
-        actionsToHandle = new InputAction[4] 
+        actionsToHandle = new InputAction[3] 
         { 
             this.player.InputHandler.Standard.Movement, 
             this.player.InputHandler.Standard.Attack, 
-            this.player.InputHandler.Standard.Target, 
-            this.player.InputHandler.Standard.FirstPersonCam 
+            this.player.InputHandler.Standard.Target
         };
     }
 
@@ -33,7 +32,7 @@ public class TakeDamageState : PlayerState
     public sealed override void OnStateEnter()
     {
         player.DisableActions(actionsToHandle);
-        SetMaterialShader("Custom/Character");
+        SetMaterialShader();
 
         TakeDamage();
         
@@ -73,14 +72,18 @@ public class TakeDamageState : PlayerState
             
     }
 
+    void SetMaterialShader()
+    {
+        foreach (Material mat in player.Mats)
+        {
+            mat.shader = player.damageShader;
+        }
+    }
     void SetMaterialShader(string shaderPath)
     {
         foreach (Material mat in player.Mats)
         {
             mat.shader = Shader.Find(shaderPath);
-
-            if (shaderPath == "Custom/Character")
-                mat.SetFloat("_Speed", 15);
         }
     }
 

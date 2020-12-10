@@ -24,7 +24,7 @@ public class CameraController : StateMachine, IControllable
     public float firstPersonXClamp;
     public float firstPersonYClamp;
 
-
+    public int layermask = 10;
     
     #endregion
 
@@ -37,18 +37,14 @@ public class CameraController : StateMachine, IControllable
     private void OnEnable()
     {
         this.InputHandler.Standard.Target.performed += OnTargetStart;
-        this.InputHandler.Standard.Target.canceled += OnTargetStop;
         this.InputHandler.Standard.FreeCam.performed += OnFreeCam;
-        this.InputHandler.Standard.FirstPersonCam.performed += OnFirstPersonCam;
         this.InputHandler.Enable();
     }
 
     private void OnDisable()
     {
         this.InputHandler.Standard.Target.performed -= OnTargetStart;
-        this.InputHandler.Standard.Target.canceled -= OnTargetStop;
         this.InputHandler.Standard.FreeCam.performed -= OnFreeCam;
-        this.InputHandler.Standard.FirstPersonCam.performed -= OnFirstPersonCam;
         this.InputHandler.Disable();
     }
 
@@ -65,20 +61,13 @@ public class CameraController : StateMachine, IControllable
 
     #region Input Delegates
     void OnTargetStart(InputAction.CallbackContext context) { this.SetState(new TargetCamState(this)); }
-    void OnTargetStop(InputAction.CallbackContext context) { this.SetState(new OrbitCamState(this)); }
 
     void OnFreeCam(InputAction.CallbackContext context) 
     { 
-        if(this.state.GetType() != typeof(FreeCamState) && this.state.GetType() != typeof(FirstPersonCamState))    
+        if(this.state.GetType() != typeof(FreeCamState))  
             this.SetState(new FreeCamState(this)); 
     }
 
-    void OnFirstPersonCam(InputAction.CallbackContext context)
-    {
-        //TODO make this player velocity not input
-        if (this.InputDir.magnitude == 0 && this.state.GetType() != typeof(FirstPersonCamState))
-            this.SetState(new FirstPersonCamState(this));
-    }
 
 
     #endregion
@@ -110,13 +99,10 @@ public class CameraController : StateMachine, IControllable
     {
         RaycastHit hit = new RaycastHit();
 
-        if (Physics.Linecast(target.position, transform.position, out hit))
-        {           
-            if(hit.transform.gameObject.CompareTag("Untagged") && hit.transform.gameObject.CompareTag("Enemy")) 
-            {
-                this.transform.position = new Vector3(hit.point.x, hit.point.y, hit.point.z);
-            }
-        }
+        if (Physics.Linecast(target.position, transform.position, out hit))        
+            if(hit.transform.gameObject.layer == layermask) 
+                this.transform.position = hit.point;
+
     }
 
     #endregion

@@ -1,4 +1,4 @@
-﻿Shader "Custom/Character"
+﻿Shader "Custom/EnemyDamage"
 {
     Properties
     {
@@ -20,7 +20,6 @@
         #pragma target 3.0
 
         sampler2D _MainTex;
-        uniform bool _Flickering;
 
         struct Input
         {
@@ -30,7 +29,6 @@
         half _Glossiness;
         half _Metallic;
         fixed4 _Color;
-        uniform float _Speed;
 
         // Add instancing support for this shader. You need to check 'Enable Instancing' on materials that use the shader.
         // See https://docs.unity3d.com/Manual/GPUInstancing.html for more information about instancing.
@@ -45,7 +43,7 @@
             fixed4 c = tex2D (_MainTex, IN.uv_MainTex) * _Color;
 
             //if (_Flickering == true)
-            c = lerp(c, fixed4(1, c.g, c.b, c.a), abs(sin(_Speed * _Time.y)));
+            c = lerp(c, fixed4(1, c.g, c.b, c.a), abs(sin(20 * _Time.y)));
 
             o.Albedo = c.rgb;
             // Metallic and smoothness come from slider variables

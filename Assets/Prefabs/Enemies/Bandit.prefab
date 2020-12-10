@@ -1355,12 +1355,14 @@ MonoBehaviour:
   Weapon: {fileID: 1453806618463681770}
   StopMaterial: {fileID: 13400000, guid: eb112ef2bc24fc74c945ed2afaf8fb53, type: 2}
   MoveMaterial: {fileID: 13400000, guid: 9b00ff7b1baf7a64eb32155b1ee78575, type: 2}
+  damageShader: {fileID: 4800000, guid: 05b8265bec3c7984082dbe28fbcc6e7a, type: 3}
   RayOrigin: {fileID: 6572688240717588204}
   health: 6
   Speed: 2
   TurnSpeed: 1000
   minFallDistance: 1
   attackDelay: 0.4
+  knockbackMagnitude: 4000
 --- !u!1 &3299997689491686084
 GameObject:
   m_ObjectHideFlags: 0

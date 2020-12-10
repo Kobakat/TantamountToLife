@@ -24,9 +24,9 @@ public class TakeDamageEnemyState : EnemyState
 
     public sealed override void OnStateEnter()
     {
-        SetMaterialShader("Custom/Character");
-
         enemy.health -= 2;
+
+        SetMaterialShader();
 
         SetAnimationInfo();
 
@@ -49,11 +49,13 @@ public class TakeDamageEnemyState : EnemyState
     {
         this.startTime = Time.time;
 
-        enemy.Anim.CrossFade("Male Damage Light", 0);
+        enemy.Anim.Play("Male Damage Light", 0);
 
         this.animLength = enemy.Anim.runtimeAnimatorController.animationClips[0].length / 2;
 
     }
+
+    
 
     void ReturnToNormalStateWhenAnimationFinishes()
     {
@@ -61,14 +63,19 @@ public class TakeDamageEnemyState : EnemyState
             enemy.SetState(new AttackEnemyState(enemy));
     }
 
+    void SetMaterialShader()
+    {
+        foreach (Material mat in enemy.Mats)
+        {
+            mat.shader = enemy.damageShader;
+        }
+    }
+
     void SetMaterialShader(string shaderPath)
     {
         foreach (Material mat in enemy.Mats)
         {
             mat.shader = Shader.Find(shaderPath);
-
-            if (shaderPath == "Custom/Character")
-                mat.SetFloat("_Speed", 15);
         }
     }
 

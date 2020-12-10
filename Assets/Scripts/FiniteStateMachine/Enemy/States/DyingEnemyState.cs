@@ -13,7 +13,9 @@ public class DyingEnemyState : EnemyState
 
     public override void OnStateEnter()
     {
-        enemy.Anim.CrossFade("Male Die", 0.2f);
+        Knockback();
+
+        enemy.Anim.Play("Male Die", 0);
 
         Disable();
 
@@ -36,5 +38,14 @@ public class DyingEnemyState : EnemyState
         enemy.transform.parent.Find("RangeTriggers").gameObject.SetActive(false);
     }
 
+    void Knockback()
+    {
+        Vector3 moveDir = enemy.transform.position - enemy.player.transform.position;
+        moveDir.y = 0;
+        moveDir = moveDir.normalized;
+        moveDir.y = enemy.player.hitCount / 3.0f;
+
+        enemy.Rb.AddForce(moveDir * enemy.knockbackMagnitude * enemy.player.hitCount);
+    }
     #endregion
 }

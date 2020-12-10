@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Chest : Interactable
 {
-    [SerializeField] GameObject LootType;
+    [SerializeField] GameObject LootType = null;
 
     Transform spawn1, spawn2;
     void Start()

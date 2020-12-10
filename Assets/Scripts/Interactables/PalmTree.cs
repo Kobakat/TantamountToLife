@@ -4,18 +4,24 @@ using UnityEngine;
 
 public class PalmTree : MonoBehaviour
 {
-    FixedJoint[] coconutJoints;
+    Coconut[] coconuts;
+    bool struck = false;
     void Start()
     {
-        coconutJoints = GetComponentsInChildren<FixedJoint>();
+        coconuts = GetComponentsInChildren<Coconut>();
     }
 
     void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("Weapon"))
+        if(other.CompareTag("Weapon") && !struck)
         {
-            foreach (FixedJoint joint in this.coconutJoints)
-                Destroy(joint);
+            foreach (Coconut coconut in this.coconuts)
+            {
+                coconut.GetComponent<Rigidbody>().isKinematic = false;
+                coconut.GetComponent<Rigidbody>().AddExplosionForce(5000, coconut.transform.position, 2.0f);
+            }
+
+            struck = true;
         }
 
     }

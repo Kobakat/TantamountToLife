@@ -38,22 +38,6 @@
                     "interactions": ""
                 },
                 {
-                    "name": "FirstPersonCam",
-                    "type": "Button",
-                    "id": "3504b319-435f-41fd-b19f-b8a939d4c706",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
-                    "name": "Block",
-                    "type": "Button",
-                    "id": "a1730c90-49cf-4292-aea6-987a7e568211",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
                     "name": "Interact",
                     "type": "Button",
                     "id": "9ab969a7-cfc1-4935-aae8-5b3b6181c531",
@@ -143,7 +127,7 @@
                 {
                     "name": "",
                     "id": "2388674f-fbee-4412-9c6d-a145843d62e7",
-                    "path": "<Mouse>/leftButton",
+                    "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
@@ -238,50 +222,6 @@
                     "action": "FreeCam",
                     "isComposite": false,
                     "isPartOfComposite": true
-                },
-                {
-                    "name": "",
-                    "id": "416c138a-42ed-452b-a8e2-2d9dd0f71eb2",
-                    "path": "<Gamepad>/dpad/up",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad",
-                    "action": "FirstPersonCam",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "6b5b8554-ab0d-40e2-8ee8-4bf3e0d933ab",
-                    "path": "<Keyboard>/f",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard",
-                    "action": "FirstPersonCam",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "66dee71b-335e-4a37-8207-b17b5e631c48",
-                    "path": "<Gamepad>/rightTrigger",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad",
-                    "action": "Block",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "213bab83-3951-4df4-af79-6fad8c569433",
-                    "path": "<Mouse>/rightButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard",
-                    "action": "Block",
-                    "isComposite": false,
-                    "isPartOfComposite": false
                 },
                 {
                     "name": "",

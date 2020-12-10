@@ -64,7 +64,7 @@ public class HealthUI : MonoBehaviour
     /// </summary>
     void PlaceHeartContainers()
     {
-        health = FindObjectOfType<Player>().health;
+        health = FindObjectOfType<Player>().maxHealth;
 
         hearts = new Image[Mathf.CeilToInt(health / 2.0f)];
 

@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Enemy : StateMachine
 {
+    #region Properties
     public Player player { get; protected set; }
     public Rigidbody Rb { get; protected set; }
     public Animator Anim { get; protected set; }
@@ -13,6 +14,7 @@ public class Enemy : StateMachine
     public Collider Weapon;
     public PhysicMaterial StopMaterial;
     public PhysicMaterial MoveMaterial;
+    public Shader damageShader;
 
     [SerializeField] Transform RayOrigin = null;
     public List<Material> Mats { get; set; }
@@ -27,6 +29,9 @@ public class Enemy : StateMachine
     int layerMask;
 
     public float attackDelay = 1.0f;
+    public float knockbackMagnitude = 15000;
+
+    #endregion
 
     #region Unity Event Functions
     void Start()
@@ -65,6 +70,16 @@ public class Enemy : StateMachine
         }
     }
 
+    public void EnableWeaponCollider()
+    {
+        Weapon.enabled = true;
+    }
+
+    public void DisableWeaponCollider()
+    {
+        Weapon.enabled = false;
+    }
+
     #endregion
 
     void CheckForFall()
@@ -89,5 +104,4 @@ public class Enemy : StateMachine
         }
     }
 
-    
 }
