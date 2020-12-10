@@ -83,10 +83,7 @@ public class Player : StateMachine, IControllable
         this.InputHandler.Standard.Attack.performed += OnAttack;
         this.InputHandler.Standard.Movement.performed += OnOrbitStart;
         this.InputHandler.Standard.Movement.canceled += OnOrbitStop;
-        this.InputHandler.Standard.Target.performed += OnTargetStart;
         this.InputHandler.Standard.Target.canceled += OnTargetStop;
-        this.InputHandler.Standard.Block.performed += OnBlockStart;
-        this.InputHandler.Standard.Block.canceled += OnBlockStop;
         this.InputHandler.Standard.Interact.performed += OnInteract;
 
         this.InputHandler.Enable();
@@ -97,10 +94,7 @@ public class Player : StateMachine, IControllable
         this.InputHandler.Standard.Attack.performed -= OnAttack;
         this.InputHandler.Standard.Movement.canceled += OnOrbitStart;
         this.InputHandler.Standard.Movement.canceled -= OnOrbitStop;
-        this.InputHandler.Standard.Target.performed -= OnTargetStart;
         this.InputHandler.Standard.Target.canceled -= OnTargetStop;
-        this.InputHandler.Standard.Block.performed -= OnBlockStart;
-        this.InputHandler.Standard.Block.canceled -= OnBlockStop;
         this.InputHandler.Standard.Interact.performed -= OnInteract;
 
         this.InputHandler.Disable();
@@ -157,21 +151,9 @@ public class Player : StateMachine, IControllable
             this.queuedAtt = true;
         }
     }
-    void OnTargetStart(InputAction.CallbackContext context) { this.SetState(new TargetState(this)); }
     void OnTargetStop(InputAction.CallbackContext context) { this.SetState(new OrbitState(this)); }
     void OnOrbitStart(InputAction.CallbackContext context) { this.Anim.CrossFade("Male_Sword_Walk", 0.2f); }
     void OnOrbitStop(InputAction.CallbackContext context) { this.Anim.CrossFade("Male Sword Stance", 0.2f); }
-    void OnBlockStart(InputAction.CallbackContext context) 
-    {
-        if(this.state.GetType() == typeof(TargetState))
-            this.SetState(new BlockState(this)); 
-    }
-
-    void OnBlockStop(InputAction.CallbackContext context) 
-    {
-        if (this.state.GetType() == typeof(BlockState))
-            this.SetState(new TargetState(this));
-    }
 
     void OnInteract(InputAction.CallbackContext context)
     {

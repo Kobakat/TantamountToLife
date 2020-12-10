@@ -48,7 +48,7 @@ public class TargetCamState : CameraState
     {
         timer += Time.deltaTime;
 
-        targetPos = cam.target.position + (cam.transform.parent.Find("Character").forward * -1).normalized * cam.distFromPlayer;
+        targetPos = cam.target.position + (cam.transform.parent.Find("Character").forward * -1).normalized * cam.distFromPlayer + new Vector3(0, cam.height, 0);
         center = cam.target.position;
 
         newXZ = Vector3.Slerp(cam.transform.position - center, targetPos - center, timer * snapSpeed) + center;
@@ -58,6 +58,11 @@ public class TargetCamState : CameraState
         cam.transform.position = new Vector3(cam.transform.position.x, Mathf.Lerp(cam.transform.position.y, targetPos.y, timer), cam.transform.position.z);
 
         cam.transform.LookAt(cam.target);
+
+        if(Vector3.Distance(targetPos, cam.transform.position) <= 0.05f)
+        {
+            cam.SetState(new OrbitCamState(cam));
+        }
     }
     #endregion
 
