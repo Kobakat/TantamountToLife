@@ -22,7 +22,8 @@ public class Player : StateMachine, IControllable
     public Collider Weapon;
     public PhysicMaterial StopMaterial;
     public PhysicMaterial MoveMaterial;
-    public List<Interactable> Interactables;
+    public Shader damageShader;
+    public List<Interactable> Interactables { get; set; }
 
     [SerializeField] Transform RayOrigin = null;
     public List<Material> Mats { get; set; }
@@ -31,7 +32,6 @@ public class Player : StateMachine, IControllable
     public float MaxSpeed = 5;
     public float TurnSpeed = 1000;
     public float minFallDistance = 1;
-    public float maxNormalToSlide = 30.0f;
     int layerMask;
 
     public int hitCount { get; set; }
@@ -231,22 +231,10 @@ public class Player : StateMachine, IControllable
         //this.transform.rotation = Quaternion.Euler(0, 0, 0);
         if(Physics.Raycast(RayOrigin.position, Vector3.down, out hit, Mathf.Infinity, layerMask))
         {
-            //Todo make this more abstract
-            this.Speed = 3;
-
             if (hit.distance > minFallDistance)
             {
                 
                 this.SetState(new FallingState(this));
-            }
-
-            else
-            {
-                if (Vector3.Angle(Vector3.up, hit.normal) > maxNormalToSlide)
-                {
-                    this.Speed = 0;
-                }
-                    
             }
         }
     }

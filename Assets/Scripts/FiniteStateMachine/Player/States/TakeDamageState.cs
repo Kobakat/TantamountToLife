@@ -33,7 +33,7 @@ public class TakeDamageState : PlayerState
     public sealed override void OnStateEnter()
     {
         player.DisableActions(actionsToHandle);
-        SetMaterialShader("Custom/Character");
+        SetMaterialShader();
 
         TakeDamage();
         
@@ -73,14 +73,18 @@ public class TakeDamageState : PlayerState
             
     }
 
+    void SetMaterialShader()
+    {
+        foreach (Material mat in player.Mats)
+        {
+            mat.shader = player.damageShader;
+        }
+    }
     void SetMaterialShader(string shaderPath)
     {
         foreach (Material mat in player.Mats)
         {
             mat.shader = Shader.Find(shaderPath);
-
-            if (shaderPath == "Custom/Character")
-                mat.SetFloat("_Speed", 15);
         }
     }
 

@@ -284,8 +284,7 @@ MonoBehaviour:
   Weapon: {fileID: 6719758858146493845}
   StopMaterial: {fileID: 13400000, guid: eb112ef2bc24fc74c945ed2afaf8fb53, type: 2}
   MoveMaterial: {fileID: 13400000, guid: 9b00ff7b1baf7a64eb32155b1ee78575, type: 2}
-  SlideMaterial: {fileID: 13400000, guid: b5570ae17392dc84588d0241b337cdf5, type: 2}
-  Interactables: []
+  damageShader: {fileID: 4800000, guid: 436d9a5c50aa69e4e9c771aa9a12313a, type: 3}
   RayOrigin: {fileID: 6719758859506672840}
   Speed: 3
   MaxSpeed: 5

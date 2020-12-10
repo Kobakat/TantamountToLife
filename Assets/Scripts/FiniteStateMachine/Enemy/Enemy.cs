@@ -13,6 +13,7 @@ public class Enemy : StateMachine
     public Collider Weapon;
     public PhysicMaterial StopMaterial;
     public PhysicMaterial MoveMaterial;
+    public Shader damageShader;
 
     [SerializeField] Transform RayOrigin = null;
     public List<Material> Mats { get; set; }
@@ -89,5 +90,4 @@ public class Enemy : StateMachine
         }
     }
 
-    
 }
