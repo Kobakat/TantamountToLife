@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Enemy : StateMachine
 {
+    #region Properties
     public Player player { get; protected set; }
     public Rigidbody Rb { get; protected set; }
     public Animator Anim { get; protected set; }
@@ -28,6 +29,8 @@ public class Enemy : StateMachine
     int layerMask;
 
     public float attackDelay = 1.0f;
+
+    #endregion
 
     #region Unity Event Functions
     void Start()
@@ -64,6 +67,16 @@ public class Enemy : StateMachine
         {
             this.SetState(new TakeDamageEnemyState(this));
         }
+    }
+
+    public void EnableWeaponCollider()
+    {
+        Weapon.enabled = true;
+    }
+
+    public void DisableWeaponCollider()
+    {
+        Weapon.enabled = false;
     }
 
     #endregion

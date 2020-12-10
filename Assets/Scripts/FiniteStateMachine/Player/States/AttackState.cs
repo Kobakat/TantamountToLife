@@ -21,7 +21,7 @@ public class AttackState : PlayerState
         this.stateMachine = s;
         
         //Decide what forms of input get disabled during this state
-        actionsToHandle = new InputAction[2] { this.player.InputHandler.Standard.Movement, null };
+        actionsToHandle = new InputAction[1] { this.player.InputHandler.Standard.Movement };
         
     }
 
@@ -47,25 +47,16 @@ public class AttackState : PlayerState
 
     public sealed override void OnStateExit()
     {
-        PlayerWeaponColliderEnabled(false);
-
-        player.EnableActions(actionsToHandle);
+        
         player.hitCount = 0;
-
     }
 
     #endregion
 
     #region State Logic
-    void PlayerWeaponColliderEnabled(bool t)
-    {
-        player.Weapon.enabled = t;
-    }
 
     void PlayAttackAnimation()
     {
-        PlayerWeaponColliderEnabled(true);
-
         switch (player.hitCount)
         {
             case 1:
@@ -112,9 +103,16 @@ public class AttackState : PlayerState
     {
         if (player.hitCount >= 3)
         {
-            this.actionsToHandle[1] = player.InputHandler.Standard.Attack;
+            player.EnableActions(actionsToHandle);
+            this.actionsToHandle[0] = player.InputHandler.Standard.Attack;
             player.DisableActions(this.actionsToHandle);
+
+            player.StartCoroutine(player.EnableAttackAfterDelay(player.comboTimeout));
         }
     }
+
+    
+
+    
     #endregion
 }

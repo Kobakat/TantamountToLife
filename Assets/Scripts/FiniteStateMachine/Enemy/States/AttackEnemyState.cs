@@ -34,9 +34,7 @@ public class AttackEnemyState : EnemyState
     }
 
     public override void OnStateExit() 
-    {
-        WeaponColliderEnabled(false);
-        
+    {       
         base.OnStateExit(); 
     }
 
@@ -47,20 +45,12 @@ public class AttackEnemyState : EnemyState
     {
         AttackAfterDelay();
         PlayUntilAnimationIsCompleted();
-
-        if(hasStruck)
-        {
-            WeaponColliderEnabled(false);
-        }
     }
 
     #endregion
 
     #region State Logic
-    void WeaponColliderEnabled(bool t)
-    {
-        enemy.Weapon.enabled = t;
-    }
+
     void PlayUntilAnimationIsCompleted()
     {
         if(Time.time > this.startTime + this.animLength && isAttacking)
@@ -87,8 +77,6 @@ public class AttackEnemyState : EnemyState
                     enemy.Anim.CrossFade("Male Attack 3", 0.1f);
                     break;
             }
-
-            WeaponColliderEnabled(true);
 
             this.startTime = Time.time;
         }

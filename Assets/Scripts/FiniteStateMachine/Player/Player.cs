@@ -41,6 +41,9 @@ public class Player : StateMachine, IControllable
     public int health = 10;
     public float invulnerabilityTime = 3;
     public static int gold = 0;
+
+    //How long after a 3 hit combo a player can attack again
+    public float comboTimeout = 1;
     #endregion
 
     #region Unity Event Functions
@@ -215,6 +218,16 @@ public class Player : StateMachine, IControllable
 
     #region Events
 
+    public void EnableWeaponCollider()
+    {
+        Weapon.enabled = true;
+    }
+
+    public void DisableWeaponCollider()
+    {
+        Weapon.enabled = false;
+    }
+
     public static event Action PlayerDamaged;
     public static event Action HealthPickup;
     public static event Action GoldPickup;
@@ -248,5 +261,12 @@ public class Player : StateMachine, IControllable
             for(int i = 0; i < renderer.materials.Length; i++)
                 this.Mats.Add(renderer.materials[i]);
         }
+    }
+
+    public IEnumerator EnableAttackAfterDelay(float lockoutTime)
+    {
+        yield return new WaitForSeconds(lockoutTime);
+
+        this.InputHandler.Standard.Attack.Enable();
     }
 }
