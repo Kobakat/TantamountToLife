@@ -225,8 +225,8 @@ Transform:
   m_Father: {fileID: 6724291073644531857}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!64 &6719758858146493845
-MeshCollider:
+--- !u!136 &2316654783994276032
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -235,10 +235,10 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 0
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: ffa463f78df756248bd71544ae012994, type: 3}
+  m_Radius: 0.9
+  m_Height: 0.13391827
+  m_Direction: 1
+  m_Center: {x: -0.11037672, y: 0.03479953, z: 0.3528439}
 --- !u!54 &6719758857973213241
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -281,7 +281,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4b5bd240163da94a9551226a3882517, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Weapon: {fileID: 6719758858146493845}
+  Weapon: {fileID: 2316654783994276032}
   StopMaterial: {fileID: 13400000, guid: eb112ef2bc24fc74c945ed2afaf8fb53, type: 2}
   MoveMaterial: {fileID: 13400000, guid: 9b00ff7b1baf7a64eb32155b1ee78575, type: 2}
   damageShader: {fileID: 4800000, guid: 436d9a5c50aa69e4e9c771aa9a12313a, type: 3}
@@ -289,8 +289,9 @@ MonoBehaviour:
   Speed: 3
   MaxSpeed: 5
   TurnSpeed: 1000
-  minFallDistance: 0.4
+  minFallDistance: 1
   health: 10
+  maxHealth: 10
   invulnerabilityTime: 2
   comboTimeout: 1.5
 --- !u!1001 &6719758858076106001

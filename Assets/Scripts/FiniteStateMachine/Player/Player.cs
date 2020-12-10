@@ -39,6 +39,7 @@ public class Player : StateMachine, IControllable
     public bool isVulnerable { get; set; }
 
     public int health = 10;
+    public int maxHealth = 10;
     public float invulnerabilityTime = 3;
     public static int gold = 0;
 
@@ -120,16 +121,18 @@ public class Player : StateMachine, IControllable
                 break;
 
             case "Health":
-                health += 2;
+                if(health < maxHealth)
+                {
+                    health += 2;
 
-                if (health > 10)
-                    health = 10;
+                    if (health > 10)
+                        health = 10;
 
-                HealthPickup.Invoke();
-                Destroy(other.gameObject);
-                break;
-
+                    HealthPickup.Invoke();
+                    Destroy(other.gameObject);
                     
+                }
+                break;
         }
     }
 
