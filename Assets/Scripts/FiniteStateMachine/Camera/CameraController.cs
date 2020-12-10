@@ -64,7 +64,7 @@ public class CameraController : StateMachine, IControllable
 
     void OnFreeCam(InputAction.CallbackContext context) 
     { 
-        if(this.state.GetType() != typeof(FreeCamState))    
+        if(this.state.GetType() != typeof(FreeCamState))  
             this.SetState(new FreeCamState(this)); 
     }
 
@@ -99,13 +99,10 @@ public class CameraController : StateMachine, IControllable
     {
         RaycastHit hit = new RaycastHit();
 
-        if (Physics.Linecast(target.position, transform.position, out hit))
-        {           
+        if (Physics.Linecast(target.position, transform.position, out hit))        
             if(hit.transform.gameObject.layer == layermask) 
-            {
                 this.transform.position = hit.point;
-            }
-        }
+
     }
 
     #endregion

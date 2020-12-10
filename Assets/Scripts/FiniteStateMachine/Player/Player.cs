@@ -83,7 +83,6 @@ public class Player : StateMachine, IControllable
         this.InputHandler.Standard.Attack.performed += OnAttack;
         this.InputHandler.Standard.Movement.performed += OnOrbitStart;
         this.InputHandler.Standard.Movement.canceled += OnOrbitStop;
-        this.InputHandler.Standard.Target.canceled += OnTargetStop;
         this.InputHandler.Standard.Interact.performed += OnInteract;
 
         this.InputHandler.Enable();
@@ -94,7 +93,6 @@ public class Player : StateMachine, IControllable
         this.InputHandler.Standard.Attack.performed -= OnAttack;
         this.InputHandler.Standard.Movement.canceled += OnOrbitStart;
         this.InputHandler.Standard.Movement.canceled -= OnOrbitStop;
-        this.InputHandler.Standard.Target.canceled -= OnTargetStop;
         this.InputHandler.Standard.Interact.performed -= OnInteract;
 
         this.InputHandler.Disable();
@@ -151,9 +149,8 @@ public class Player : StateMachine, IControllable
             this.queuedAtt = true;
         }
     }
-    void OnTargetStop(InputAction.CallbackContext context) { this.SetState(new OrbitState(this)); }
-    void OnOrbitStart(InputAction.CallbackContext context) { this.Anim.CrossFade("Male_Sword_Walk", 0.2f); }
-    void OnOrbitStop(InputAction.CallbackContext context) { this.Anim.CrossFade("Male Sword Stance", 0.2f); }
+    void OnOrbitStart(InputAction.CallbackContext context) { this.Anim.CrossFade("Male_Sword_Walk", 0.1f); }
+    void OnOrbitStop(InputAction.CallbackContext context) { this.Anim.CrossFade("Male Sword Stance", 0.1f); }
 
     void OnInteract(InputAction.CallbackContext context)
     {

@@ -20,7 +20,7 @@ public class TargetCamState : CameraState
     public TargetCamState(StateMachine s) : base(s) 
     {
         this.snapSpeed = 7;
-        this.actionsToHandle = new InputAction[2] { cam.InputHandler.Standard.FirstPersonCam, cam.InputHandler.Standard.FreeCam };
+        this.actionsToHandle = new InputAction[1] { cam.InputHandler.Standard.FreeCam };
     }
 
     #region State Events

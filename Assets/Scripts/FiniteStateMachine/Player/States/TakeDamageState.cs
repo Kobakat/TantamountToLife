@@ -11,12 +11,11 @@ public class TakeDamageState : PlayerState
 
     public TakeDamageState(StateMachine s) : base(s)
     {
-        actionsToHandle = new InputAction[4] 
+        actionsToHandle = new InputAction[3] 
         { 
             this.player.InputHandler.Standard.Movement, 
             this.player.InputHandler.Standard.Attack, 
-            this.player.InputHandler.Standard.Target, 
-            this.player.InputHandler.Standard.FirstPersonCam 
+            this.player.InputHandler.Standard.Target
         };
     }
 
