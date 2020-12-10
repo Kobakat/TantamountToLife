@@ -55,6 +55,8 @@ public class TakeDamageEnemyState : EnemyState
 
     }
 
+    
+
     void ReturnToNormalStateWhenAnimationFinishes()
     {
         if (Time.time > startTime + animLength)

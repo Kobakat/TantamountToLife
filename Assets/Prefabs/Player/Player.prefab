@@ -289,9 +289,10 @@ MonoBehaviour:
   Speed: 3
   MaxSpeed: 5
   TurnSpeed: 1000
-  minFallDistance: 0.3
+  minFallDistance: 0.4
   health: 10
-  invulnerabilityTime: 3
+  invulnerabilityTime: 2
+  comboTimeout: 1.5
 --- !u!1001 &6719758858076106001
 PrefabInstance:
   m_ObjectHideFlags: 0

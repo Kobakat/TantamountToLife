@@ -47,7 +47,7 @@ public class AttackState : PlayerState
 
     public sealed override void OnStateExit()
     {
-        
+        player.InputHandler.Standard.Movement.Enable();
         player.hitCount = 0;
     }
 
@@ -103,7 +103,6 @@ public class AttackState : PlayerState
     {
         if (player.hitCount >= 3)
         {
-            player.EnableActions(actionsToHandle);
             this.actionsToHandle[0] = player.InputHandler.Standard.Attack;
             player.DisableActions(this.actionsToHandle);
 

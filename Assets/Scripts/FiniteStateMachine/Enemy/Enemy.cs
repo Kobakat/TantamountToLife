@@ -29,6 +29,7 @@ public class Enemy : StateMachine
     int layerMask;
 
     public float attackDelay = 1.0f;
+    public float knockbackMagnitude = 15000;
 
     #endregion
 
