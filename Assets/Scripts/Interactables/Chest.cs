@@ -4,12 +4,14 @@ using UnityEngine;
 public class Chest : Interactable
 {
     [SerializeField] GameObject LootType = null;
-
+    AudioSource Audio = null;
     Transform spawn1, spawn2;
     void Start()
     {
         spawn1 = transform.Find("LootTarget1");
         spawn2 = transform.Find("LootTarget2");
+
+        Audio = this.GetComponent<AudioSource>();
     }
     void OnTriggerEnter(Collider other)
     {
@@ -27,7 +29,7 @@ public class Chest : Interactable
     {
         this.GetComponent<Collider>().enabled = false;
         this.GetComponentInChildren<HingeJoint>().useMotor = true;
-
+        Audio.Play();
         SpawnLoot();
     }
 

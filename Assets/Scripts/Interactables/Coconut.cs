@@ -5,7 +5,13 @@ using UnityEngine;
 public class Coconut : MonoBehaviour
 {
     [SerializeField] float heartSpawnPercentChance = 30;
-    [SerializeField] GameObject HealthPickup;
+    [SerializeField] GameObject HealthPickup = null;
+
+    ParticleSystem particle;
+    private void Start()
+    {
+        particle = this.GetComponentInChildren<ParticleSystem>();
+    }
     void OnTriggerEnter(Collider other)
     {
         if(other.CompareTag("Weapon"))
@@ -27,7 +33,11 @@ public class Coconut : MonoBehaviour
 
     void DestroyCoconut()
     {
-        //TODO play particle effect
-        this.gameObject.SetActive(false);
+        particle.Play();
+        this.GetComponent<AudioSource>().Play();
+        this.GetComponent<MeshCollider>().enabled = false;
+        this.GetComponent<MeshRenderer>().enabled = false;
+
+        this.GetComponent<Rigidbody>().isKinematic = true;
     }
 }

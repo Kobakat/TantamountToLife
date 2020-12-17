@@ -27,6 +27,14 @@ public class Player : StateMachine, IControllable
 
     [SerializeField] Transform RayOrigin = null;
     public List<Material> Mats { get; set; }
+    public ParticleSystem Particle { get; set; }
+    public AudioSource Audio { get; set; }
+
+
+    public AudioClip hitOne = null;
+    public AudioClip hitTwo = null;
+    public AudioClip hitThree = null;
+    public AudioClip healthPick = null;
 
     public float Speed = 3;
     public float MaxSpeed = 5;
@@ -56,6 +64,8 @@ public class Player : StateMachine, IControllable
         this.PlayerCol = this.GetComponent<CapsuleCollider>();
         this.Cam = this.transform.parent.GetComponentInChildren<Camera>();
         this.Interactables = new List<Interactable>();
+        this.Particle = this.GetComponentInChildren<ParticleSystem>();
+        this.Audio = this.GetComponent<AudioSource>();
 
         //Then state info
         this.SetState(state = new OrbitState(this));
@@ -121,7 +131,9 @@ public class Player : StateMachine, IControllable
                         health = 10;
 
                     HealthPickup.Invoke();
-                    Destroy(other.gameObject);
+                    Audio.PlayOneShot(healthPick);
+
+                    other.gameObject.SetActive(false);
                     
                 }
                 break;

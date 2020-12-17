@@ -11,13 +11,18 @@ public class Enemy : StateMachine
     public Animator Anim { get; protected set; }
     public Collider EnemyCol { get; protected set; }
     
-    public Collider Weapon;
+    public Collider Weapon;  
     public PhysicMaterial StopMaterial;
     public PhysicMaterial MoveMaterial;
     public Shader damageShader;
 
     [SerializeField] Transform RayOrigin = null;
     public List<Material> Mats { get; set; }
+    public ParticleSystem Particle { get; set; }
+    public AudioSource Audio { get; set; }
+
+    public AudioClip hitOne = null;
+    public AudioClip hitTwo = null;
 
     public RaycastHit hit;
 
@@ -42,6 +47,8 @@ public class Enemy : StateMachine
         this.Anim = this.GetComponent<Animator>();
         this.Rb = this.GetComponent<Rigidbody>();
         this.EnemyCol = this.GetComponent<CapsuleCollider>();
+        this.Particle = this.GetComponentInChildren<ParticleSystem>();
+        this.Audio = this.GetComponent<AudioSource>();
 
         //Then set the state
         this.SetState(state = new IdleEnemyState(this));
