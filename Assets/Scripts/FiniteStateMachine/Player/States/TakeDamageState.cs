@@ -35,7 +35,7 @@ public class TakeDamageState : PlayerState
         SetMaterialShader();
 
         TakeDamage();
-        
+        PlaySVFX();
         SetAnimationInfo();
 
         if (player.health <= 0)
@@ -98,6 +98,25 @@ public class TakeDamageState : PlayerState
         player.StartCoroutine(Vulnerable());      
     }
 
+    void PlaySVFX()
+    {
+        player.Particle.Play();
+
+        int choice = Random.Range(0, 3);
+
+        switch(choice)
+        {
+            case 0:
+                player.Audio.PlayOneShot(player.hitOne);
+                break;
+            case 1:
+                player.Audio.PlayOneShot(player.hitTwo);
+                break;
+            case 2:
+                player.Audio.PlayOneShot(player.hitThree);
+                break;
+        }
+    }
     IEnumerator Vulnerable()
     {
         yield return new WaitForSeconds(player.invulnerabilityTime);

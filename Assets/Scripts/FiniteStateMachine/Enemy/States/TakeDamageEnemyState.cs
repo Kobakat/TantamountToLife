@@ -27,7 +27,7 @@ public class TakeDamageEnemyState : EnemyState
         enemy.health -= 2;
 
         SetMaterialShader();
-
+        PlaySVFX();
         SetAnimationInfo();
 
         if (enemy.health <= 0)
@@ -76,6 +76,23 @@ public class TakeDamageEnemyState : EnemyState
         foreach (Material mat in enemy.Mats)
         {
             mat.shader = Shader.Find(shaderPath);
+        }
+    }
+
+    void PlaySVFX()
+    {
+        enemy.Particle.Play();
+
+        int choice = Random.Range(0, 2);
+
+        switch(choice)
+        {
+            case 0:
+                enemy.Audio.PlayOneShot(enemy.hitOne);
+                break;
+            case 1:
+                enemy.Audio.PlayOneShot(enemy.hitTwo);
+                break;
         }
     }
 
