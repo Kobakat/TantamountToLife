@@ -1,5 +1,3 @@
 # TantamountToLife
 
-This project is a demo of a 3D Action-Adventure.
-
-Battle enemies, Explore islands, and Loot Teasure!
+Tantamount to Life is a proof of concept personal project of a third person action adventure game.
